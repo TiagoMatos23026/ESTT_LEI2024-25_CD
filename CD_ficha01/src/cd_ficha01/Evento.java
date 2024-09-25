@@ -12,4 +12,9 @@ public class Evento {
     private String nomePessoa;
     private String nomeEvento;
     private String dataEvento;
+    
+    @Override
+    public String toString(){
+        return nomeEvento + " - " + dataEvento;
+    }
 }

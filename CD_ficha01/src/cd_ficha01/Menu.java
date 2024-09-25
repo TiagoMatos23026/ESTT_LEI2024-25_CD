@@ -7,6 +7,7 @@ package cd_ficha01;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -26,10 +27,10 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
-    
+
     private JList<String> list;
     private DefaultListModel<String> listModel;
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -51,6 +52,7 @@ public class Menu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(500, 350));
         setPreferredSize(new java.awt.Dimension(800, 400));
 
         jLabel1.setBackground(new java.awt.Color(200, 200, 200));
@@ -59,14 +61,11 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel2.setText("Nome Completo");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        // Initialize the JList with an empty DefaultListModel
+    listModel = new DefaultListModel<>();
+    jList1.setModel(listModel);  // Set the empty model to jList1
+    jScrollPane1.setViewportView(jList1);
 
-        jTextField1.setText("jTextField1");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -75,9 +74,7 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel3.setText("Evento");
 
-        jTextField2.setText("jTextField2");
-
-        jButton1.setText("Adicionar Currículo");
+        jButton1.setText("Adicionar Evento");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -91,7 +88,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Listar");
+        jButton3.setText("Listar Currículos");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -115,9 +112,8 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 4, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -155,53 +151,20 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Extract data from text fields
+        String nomePessoa = jTextField1.getText();
+        String infoEvento = jTextField2.getText();
+
+        // Call the separate method to handle the event creation and saving
+        saveEventoToFile(nomePessoa, infoEvento);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        loadFromFile();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void loadFromFile() {
-        // Create list
-        listModel = new DefaultListModel<>();
-        list = new JList<>(listModel);
-        JScrollPane scrollPane = new JScrollPane(list);
-        
-        
-        
-        // Create a JFileChooser for file selection
-        JFileChooser fileChooser = new JFileChooser();
-        int option = fileChooser.showOpenDialog(this);
-
-        if (option == JFileChooser.APPROVE_OPTION) {
-            // Get the selected file
-            File file = fileChooser.getSelectedFile();
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                // Clear the previous content in the list
-                if (listModel != null){
-                    listModel.clear();
-                }
-
-                // Read the file line by line and add each line to the list
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    listModel.addElement(line);
-                }
-
-                JOptionPane.showMessageDialog(this, "File loaded successfully!");
-            } catch (IOException ex) {
-                // Handle any I/O exceptions
-                JOptionPane.showMessageDialog(this, "Error loading file: " + ex.getMessage());
-            }
-            
-            jList1.setModel(listModel);
-        }
-    }
-    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        loadFromFile();
+        loadListaCurriculos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -237,6 +200,191 @@ public class Menu extends javax.swing.JFrame {
                 new Menu().setVisible(true);
             }
         });
+    }
+
+    //
+    // Método para adicionar novo Evento ao Currículo da pessoa
+    //
+    private void saveEventoToFile(String nomePessoa, String infoEvento) {
+        // Split infoEvento into nomeEvento and dataEvento
+        String[] parts = infoEvento.split(";", 2); // Split into two parts
+        if (parts.length < 2) {
+            JOptionPane.showMessageDialog(this, "Por favor insira o nome do evento e a data em que este ocorreu separados por um ';' ");
+            return;
+        }
+
+        String nomeEvento = parts[0];
+        String dataEvento = parts[1];
+
+        // Create a new Evento object
+        Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
+
+        // Generate the filename of the person
+        String fileName = nomePessoa.toLowerCase().replace(" ", "") + "curriculum.txt";
+        File file = new File(fileName);
+
+        // Check if the event already exists in the curriculum
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Check if the event already exists by comparing the event name (ignores date)
+                    if (line.contains(nomeEvento)) {
+                        JOptionPane.showMessageDialog(this, "Este evento já existe no currículo!");
+                        return;  // Exit if the event already exists
+                    }
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro: " + e.getMessage());
+                return;
+            }
+        }
+
+        // File operations: Append new event to the file
+        try (FileWriter writer = new FileWriter(file, true)) {
+            writer.write(evento.toString() + "\n");
+            JOptionPane.showMessageDialog(this, "Evento inserido com sucesso!");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao inserir evento: " + e.getMessage());
+        }
+
+        // Update the list of curriculums (listaCurriculos)
+        updateListaCurriculos(nomePessoa);
+    }
+
+    //
+    // Método para atualizar lista de Currículos ao ser inserido um novo nome
+    //
+    private void updateListaCurriculos(String nomePessoa) {
+        File listaFile = new File("listaCurriculos.txt");
+
+        // If the file doesn't exist, create it and add the name immediately
+        if (!listaFile.exists()) {
+            try (FileWriter writer = new FileWriter(listaFile)) {
+                writer.write(nomePessoa + "\n");
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Erro ao criar uma lista de Currículos: " + e.getMessage());
+            }
+            return;
+        }
+
+        // If the file exists, check if the name is already listed
+        try (BufferedReader reader = new BufferedReader(new FileReader(listaFile))) {
+            String line;
+            boolean nameExists = false;
+
+            // Read each line to check if the person's name already exists
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().equalsIgnoreCase(nomePessoa)) {
+                    nameExists = true;
+                    break;
+                }
+            }
+
+            // If the name does not exist, append it to the file
+            if (!nameExists) {
+                try (FileWriter writer = new FileWriter(listaFile, true)) {
+                    writer.write(nomePessoa + "\n");
+                    JOptionPane.showMessageDialog(this, nomePessoa + " adiciona à lista de Currículos.");
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(this, "Erro ao atualizar a lista de Currículos: " + e.getMessage());
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Erro ao ler a lista de Currículos: " + e.getMessage());
+        }
+    }
+
+    //
+    // Método para listar as pessoas que têm Currículos
+    //
+    private void loadListaCurriculos() {
+        // Create list model to hold the content
+        listModel = new DefaultListModel<>();
+        list = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(list);
+
+        // Reference the listaCurriculos.txt file
+        File listaFile = new File("listaCurriculos.txt");
+
+        // Check if the file exists
+        if (!listaFile.exists()) {
+            JOptionPane.showMessageDialog(this, "O ficheiro 'listaCurriculos.txt' não existe.");
+            return;
+        }
+
+        // Read the file and populate the JList with its content
+        try (BufferedReader reader = new BufferedReader(new FileReader(listaFile))) {
+            // Clear the previous content in the list
+            if (listModel != null) {
+                listModel.clear();
+            }
+
+            // Read the file line by line and add each line (person's name) to the list
+            String line;
+            while ((line = reader.readLine()) != null) {
+                listModel.addElement(line);  // Add each name from listaCurriculos.txt
+            }
+
+            JOptionPane.showMessageDialog(this, "Sucesso ao carregar a lista de currículos!");
+        } catch (IOException ex) {
+            // Handle any I/O exceptions
+            JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro 'listaCurriculos.txt': " + ex.getMessage());
+        }
+
+        // Set the model for the jList to display the loaded names
+        jList1.setModel(listModel);
+
+    }
+
+    //
+    // Método para carregar Currículo da pessoa selecionada
+    //
+    private void loadFromFile() {
+        // Check if any item is selected in the list
+        String selectedPerson = jList1.getSelectedValue();
+
+        if (selectedPerson == null) {
+            JOptionPane.showMessageDialog(this, "Selecione uma pessoa da lista.");
+            return;
+        }
+
+        // Convert the person's name to the format of the file name
+        String fileName = selectedPerson.toLowerCase().replace(" ", "") + "curriculum.txt";
+        File file = new File(fileName);
+
+        // Check if the file exists for the selected person
+        if (!file.exists()) {
+            JOptionPane.showMessageDialog(this, "Erro: O ficheiro para " + selectedPerson + " não existe.");
+            return;
+        }
+
+        // Create list model to hold the content
+        listModel = new DefaultListModel<>();
+        list = new JList<>(listModel);
+        JScrollPane scrollPane = new JScrollPane(list);
+
+        // Read the file and populate the JList with its content
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            // Clear the previous content in the list
+            if (listModel != null) {
+                listModel.clear();
+            }
+
+            // Read the file line by line and add each event (line) to the list
+            String line;
+            while ((line = reader.readLine()) != null) {
+                listModel.addElement(line);  // Add each event from the file
+            }
+
+            JOptionPane.showMessageDialog(this, "Currículo de " + selectedPerson + " carregado com sucesso!");
+        } catch (IOException ex) {
+            // Handle any I/O exceptions
+            JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro: " + ex.getMessage());
+        }
+
+        // Set the model for the jList to display the loaded curriculum events
+        jList1.setModel(listModel);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
