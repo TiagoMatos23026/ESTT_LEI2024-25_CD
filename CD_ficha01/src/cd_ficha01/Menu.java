@@ -32,7 +32,7 @@ public class Menu extends javax.swing.JFrame {
     private Blockchain bc = new Blockchain();
 
     private JList<String> list;
-    private DefaultListModel<String> listModel;
+    private DefaultListModel<String> listModel = new DefaultListModel<>();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,11 +65,7 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel2.setText("Nome Completo");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(listModel);
         jScrollPane1.setViewportView(jList1);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
