@@ -5,6 +5,9 @@
 package cd_ficha01;
 
 import cd_ficha01.classes.Blockchain;
+import cd_ficha01.classes.Hash;
+import static cd_ficha01.classes.Hash.getHash;
+import cd_ficha01.classes.MerkleTree;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 
 /**
  *
@@ -30,6 +34,7 @@ public class Menu extends javax.swing.JFrame {
     }
     
     private Blockchain bc = new Blockchain();
+    private MerkleTree tree = new MerkleTree();
 
     private JList<String> list;
     private DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -166,9 +171,15 @@ public class Menu extends javax.swing.JFrame {
         // Extract data from text fields
         String nomePessoa = jTextField1.getText();
         String infoEvento = jTextField2.getText();
+        
+        String hash = getHash(infoEvento);
+        JOptionPane.showMessageDialog(this, hash);
+
 
         // Call the separate method to handle the event creation and saving
         saveEventoToFile(nomePessoa, infoEvento);
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -216,6 +227,11 @@ public class Menu extends javax.swing.JFrame {
                 new Menu().setVisible(true);
             }
         });
+    }
+    
+    private String getHashFromEvento (String evento){
+        String evt = getHash(evento);
+        return evt;
     }
 
     //
