@@ -15,15 +15,15 @@ import java.util.Base64;
  */
 public class Zip_Unzip {
     public static void main(String[] args) throws Exception {
-        String fileName = "image.jpg";
+        String fileName = "src\\CD_Ficha03\\image.jpg";
         byte[] data = Files.readAllBytes(Path.of(fileName));
         //comprimir
-        byte [] zip = SecurityUtils.zip(data);
+        byte[] zip = SecurityUtils.zip(data);
         Files.write(Path.of(fileName+".zip"), zip);
         //converter para texto
         System.out.println("ZIP = " + Base64.getEncoder().encodeToString(zip));
         //expandir os dados
-        byte []original = SecurityUtils.unzip(zip);
+        byte[] original = SecurityUtils.unzip(zip);
         //guardar o original
         Files.write(Path.of("original_" + fileName), original);
     }

@@ -8,6 +8,6 @@ package CD_Ficha03;
  *
  * @author asus
  */
-public class Criptografia {
+public class Criptografia_Multipla_Assimetrica {
     
 }
