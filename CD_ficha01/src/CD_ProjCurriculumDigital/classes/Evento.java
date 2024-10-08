@@ -1,4 +1,4 @@
-package cd_ficha01;
+package CD_ProjCurriculumDigital.classes;
 
 
 public class Evento {

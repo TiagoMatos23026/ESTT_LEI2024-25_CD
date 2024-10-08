@@ -1,5 +1,5 @@
 
-package cd_ficha01.classes;
+package CD_ProjCurriculumDigital.classes;
 
 
 public class Block {

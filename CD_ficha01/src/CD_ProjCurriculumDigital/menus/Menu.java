@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package cd_ficha01;
+package CD_ProjCurriculumDigital.menus;
 
-import cd_ficha01.classes.Blockchain;
-import cd_ficha01.classes.Hash;
-import static cd_ficha01.classes.Hash.getHash;
-import cd_ficha01.classes.MerkleTree;
+import CD_ProjCurriculumDigital.classes.Evento;
+import CD_ProjCurriculumDigital.classes.Blockchain;
+import CD_ProjCurriculumDigital.classes.Hash;
+import static CD_ProjCurriculumDigital.classes.Hash.getHash;
+import CD_ProjCurriculumDigital.classes.MerkleTree;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -62,7 +63,6 @@ public class Menu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(500, 350));
-        setPreferredSize(new java.awt.Dimension(800, 440));
 
         jLabel1.setBackground(new java.awt.Color(200, 200, 200));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
