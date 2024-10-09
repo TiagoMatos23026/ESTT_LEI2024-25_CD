@@ -69,6 +69,38 @@ public class User {
         
         Files.write(Path.of(this.name + ".pub"), pub.getEncoded());
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public PublicKey getPub() {
+        return pub;
+    }
+
+    public void setPub(PublicKey pub) {
+        this.pub = pub;
+    }
+
+    public PrivateKey getPriv() {
+        return priv;
+    }
+
+    public void setPriv(PrivateKey priv) {
+        this.priv = priv;
+    }
+
+    public Key getSim() {
+        return sim;
+    }
+
+    public void setSim(Key sim) {
+        this.sim = sim;
+    }
     
     public void load(String password) throws Exception{
         //desencriptar a privada
