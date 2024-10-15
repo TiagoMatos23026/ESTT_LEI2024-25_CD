@@ -249,7 +249,7 @@ public class Menu extends javax.swing.JFrame {
         String dataEvento = parts[1];
 
         // Create a new Evento object
-        Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
+        // Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
 
         // Generate the filename of the person
         String fileName = nomePessoa.toLowerCase().replace(" ", "") + "curriculum.txt";
@@ -274,7 +274,7 @@ public class Menu extends javax.swing.JFrame {
 
         // File operations: Append new event to the file
         try (FileWriter writer = new FileWriter(file, true)) {
-            writer.write(evento.toString() + "\n");
+            //writer.write(evento.toString() + "\n");
             JOptionPane.showMessageDialog(this, "Evento inserido com sucesso!");
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erro ao inserir evento: " + e.getMessage());
