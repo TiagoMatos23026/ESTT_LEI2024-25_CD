@@ -52,23 +52,6 @@ public class User {
         this.pub = kp.getPublic();
         this.priv = kp.getPrivate();
     }
-    
-    public void save(String password) throws Exception{
-        //encriptar a chave privada
-        byte[] privData = SecurityUtils.encrypt(priv.getEncoded(), password);
-        
-        //guardar a chave privada
-        Files.write(Path.of(this.name + ".priv"), privData);
-        
-        //encriptar a chave simétrica
-        byte[] simData = SecurityUtils.encrypt(sim.getEncoded(), password);
-        
-        //guardar a chave privada
-        Files.write(Path.of(this.name + ".sim"), simData);
-        
-        
-        Files.write(Path.of(this.name + ".pub"), pub.getEncoded());
-    }
 
     public String getName() {
         return name;
@@ -102,6 +85,23 @@ public class User {
         this.sim = sim;
     }
     
+    public void save(String password) throws Exception{
+        //encriptar a chave privada
+        byte[] privData = SecurityUtils.encrypt(priv.getEncoded(), password);
+        
+        //guardar a chave privada
+        Files.write(Path.of(this.name + ".priv"), privData);
+        
+        //encriptar a chave simétrica
+        byte[] simData = SecurityUtils.encrypt(sim.getEncoded(), password);
+        
+        //guardar a chave privada
+        Files.write(Path.of(this.name + ".sim"), simData);
+        
+        
+        Files.write(Path.of(this.name + ".pub"), pub.getEncoded());
+    }
+    
     public void load(String password) throws Exception{
         //desencriptar a privada
         byte[] privData = Files.readAllBytes(Path.of(this.name + ".priv"));
@@ -117,6 +117,10 @@ public class User {
         this.priv = SecurityUtils.getPrivateKey(privData);
         this.pub = SecurityUtils.getPublicKey(pubData);
         this.sim = SecurityUtils.getAESKey(simData);
+    }
+    
+    public void sign(){
+        
     }
             
     
