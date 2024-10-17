@@ -19,6 +19,8 @@ import java.security.PublicKey;
 public class User {
     String name;
     
+    String cc;
+    
     //chave pública
     PublicKey pub;
     
@@ -28,8 +30,9 @@ public class User {
     //chave simétrica
     Key sim;
     
-    public User(String name){
+    public User(String name, String cc){
         this.name = name;
+        this.cc = cc;
         this.pub = null;
         this.priv = null;
         this.sim = null;
@@ -37,6 +40,7 @@ public class User {
     
     public User(){
         this.name="noName";
+        this.cc = "123";
         this.pub = null;
         this.priv = null;
         this.sim = null;
@@ -51,6 +55,14 @@ public class User {
         
         this.pub = kp.getPublic();
         this.priv = kp.getPrivate();
+    }
+    
+    public String getCC(){
+        return cc;
+    }
+    
+    public void setCC(){
+        this.cc = cc;
     }
 
     public String getName() {
@@ -95,10 +107,10 @@ public class User {
         //encriptar a chave simétrica
         byte[] simData = SecurityUtils.encrypt(sim.getEncoded(), password);
         
-        //guardar a chave privada
+        //guardar a chave simétrica
         Files.write(Path.of(this.name + ".sim"), simData);
         
-        
+        //guardar a chave pública
         Files.write(Path.of(this.name + ".pub"), pub.getEncoded());
     }
     
@@ -109,7 +121,7 @@ public class User {
         
         //desencriptar a simétrica
         byte[] simData = Files.readAllBytes(Path.of(this.name + ".sim"));
-        privData = SecurityUtils.decrypt(simData, password);
+        simData = SecurityUtils.decrypt(simData, password);
         
         //ler a pública
         byte[] pubData = Files.readAllBytes(Path.of(this.name + ".pub"));
