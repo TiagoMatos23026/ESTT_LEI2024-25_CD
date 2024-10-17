@@ -249,11 +249,8 @@ public class Menu extends javax.swing.JFrame {
         String dataEvento = parts[1];
 
         // Create a new Evento object
-<<<<<<< HEAD
         // Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
-=======
        // Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
->>>>>>> user
 
         // Generate the filename of the person
         String fileName = nomePessoa.toLowerCase().replace(" ", "") + "curriculum.txt";
