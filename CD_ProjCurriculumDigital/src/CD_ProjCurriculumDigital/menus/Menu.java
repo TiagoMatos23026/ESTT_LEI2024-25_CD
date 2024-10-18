@@ -4,31 +4,16 @@
  */
 package CD_ProjCurriculumDigital.menus;
 
-import CD_ProjCurriculumDigital.classes.Evento;
-import CD_ProjCurriculumDigital.classes.Blockchain;
-import CD_ProjCurriculumDigital.classes.Hash;
-import static CD_ProjCurriculumDigital.classes.Hash.getHash;
-import CD_ProjCurriculumDigital.classes.MerkleTree;
 import CD_ProjCurriculumDigital.classes.User;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JList;
+import java.util.Arrays;
+import java.util.Base64;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 
 /**
  *
- * @author tiago
+ * @author asus
  */
 public class Menu extends javax.swing.JFrame {
 
@@ -39,12 +24,6 @@ public class Menu extends javax.swing.JFrame {
         initComponents();
     }
 
-    private Blockchain bc = new Blockchain();
-    private MerkleTree tree = new MerkleTree();
-
-    private JList<String> list;
-    private DefaultListModel<String> listModel = new DefaultListModel<>();
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,157 +32,182 @@ public class Menu extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-    jTabbedPane1 = new javax.swing.JTabbedPane();
-    jPanel4 = new javax.swing.JPanel();
-    jLabel5 = new javax.swing.JLabel();
-    LoginCC = new javax.swing.JTextField();
-    jLabel6 = new javax.swing.JLabel();
-    BtnLogin = new javax.swing.JButton();
-    LoginNome = new javax.swing.JTextField();
-    jLabel7 = new javax.swing.JLabel();
-    jPasswordField1 = new javax.swing.JPasswordField();
-    
-    jPanel3 = new javax.swing.JPanel();
-    jLabel1 = new javax.swing.JLabel();
-    RegisterCC = new javax.swing.JTextField();
-    jLabel2 = new javax.swing.JLabel();
-    RegisterNome = new javax.swing.JTextField();
-    jLabel3 = new javax.swing.JLabel();
-    jLabel4 = new javax.swing.JLabel();
-    BtnRegister = new javax.swing.JButton();
-    RegisterPass = new javax.swing.JPasswordField();
-    RegisterPassConf = new javax.swing.JPasswordField();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-    setLocation(new java.awt.Point(500, 350));
-    setPreferredSize(new java.awt.Dimension(650, 420));
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        BtnLogin = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        LoginNome = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        LoginCC = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        LoginPass = new javax.swing.JPasswordField();
+        jPanel2 = new javax.swing.JPanel();
+        BtnRegister = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        RegisterNome = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        RegisterCC = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        RegisterPass = new javax.swing.JPasswordField();
+        RegisterPassConf = new javax.swing.JPasswordField();
 
-    // Setup TabbedPane
-    jTabbedPane1.setMaximumSize(new java.awt.Dimension(400, 300));
-    jTabbedPane1.setPreferredSize(new java.awt.Dimension(300, 318));
+        jLabel3.setText("jLabel3");
 
-    // Setup Login Panel
-    jLabel7.setText("Nome Completo");
-    jLabel5.setText("Número de Cartão do Cidadão");
-    jLabel6.setText("Password");
+        jLabel6.setText("jLabel6");
 
-    BtnLogin.setText("Login");
-    BtnLogin.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BtnLoginActionPerformed(evt);
-        }
-    });
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    // Layout for Login Panel
-    javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-    jPanel4.setLayout(jPanel4Layout);
-    jPanel4Layout.setHorizontalGroup(
-        jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        BtnLogin.setText("Login");
+        BtnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnLoginActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Nome Completo");
+
+        jLabel2.setText("Número de Identificação Civil");
+
+        jLabel4.setText("Password");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BtnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LoginNome)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                     .addComponent(LoginCC)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPasswordField1)
-                    .addComponent(BtnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(LoginPass))
                 .addContainerGap())
-    );
-    jPanel4Layout.setVerticalGroup(
-        jPanel4Layout.createSequentialGroup()
-            .addGap(36)
-            .addComponent(jLabel7)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(LoginNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(jLabel5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(LoginCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(jLabel6)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-            .addComponent(BtnLogin)
-            .addContainerGap()
-    );
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LoginNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LoginCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(LoginPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addComponent(BtnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-    jTabbedPane1.addTab("Login", jPanel4);
+        jTabbedPane1.addTab("Login", jPanel1);
 
-    // Setup Register Panel
-    jLabel1.setText("Número Cartão do Cidadão");
-    jLabel2.setText("Nome Completo");
-    jLabel3.setText("Password");
-    jLabel4.setText("Confirmação de Password");
+        BtnRegister.setText("Registar");
+        BtnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnRegisterActionPerformed(evt);
+            }
+        });
 
-    BtnRegister.setText("Registar");
-    BtnRegister.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            BtnRegisterActionPerformed(evt);
-        }
-    });
+        jLabel5.setText("Nome Completo");
 
-    // Layout for Register Panel
-    javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-    jPanel3.setLayout(jPanel3Layout);
-    jPanel3Layout.setHorizontalGroup(
-        jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        RegisterNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegisterNomeActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Número de Identificação Civil");
+
+        jLabel8.setText("Password");
+
+        jLabel9.setText("Confirmação de Password");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnRegister, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RegisterPassConf, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RegisterPass, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(RegisterNome, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RegisterCC, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RegisterNome)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(RegisterCC)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(RegisterPass)
+                    .addComponent(RegisterPassConf))
                 .addContainerGap())
-    );
-    jPanel3Layout.setVerticalGroup(
-        jPanel3Layout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(jLabel1)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(RegisterCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(jLabel2)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(RegisterNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(jLabel3)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(RegisterPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(RegisterPassConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18)
-            .addComponent(BtnRegister)
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-    );
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RegisterNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RegisterCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RegisterPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(RegisterPassConf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
-    jTabbedPane1.addTab("Registo", jPanel3);
+        jTabbedPane1.addTab("Registo", jPanel2);
 
-    // Main Layout
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-    );
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1)
+        );
 
-    pack();
-}
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
+        try {
+            User u = new User(LoginNome.getText(), LoginCC.getText());
+
+            u.load(new String(LoginPass.getPassword()));
+            String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
+
+            JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Erro ao efetuar login.");
+        }
+    }//GEN-LAST:event_BtnLoginActionPerformed
+
+    private void RegisterNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RegisterNomeActionPerformed
 
     private void BtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegisterActionPerformed
         if (Arrays.equals(RegisterPass.getPassword(), RegisterPassConf.getPassword())) {
@@ -214,6 +218,10 @@ public class Menu extends javax.swing.JFrame {
 
                 u.save(new String(RegisterPass.getPassword()));
                 JOptionPane.showMessageDialog(this, "Utilizador registado com sucesso!");
+                
+                String pub =Base64.getEncoder().encodeToString(u.getPub().getEncoded());
+                txtPublicKey.setText(pub);
+                new MenuAutenticado(u).setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -222,36 +230,6 @@ public class Menu extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "As passwords são diferentes.");
         }
     }//GEN-LAST:event_BtnRegisterActionPerformed
-
-    private void RegisterNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RegisterNomeActionPerformed
-
-    private void RegisterCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterCCActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RegisterCCActionPerformed
-
-    private void LoginNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginNomeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LoginNomeActionPerformed
-
-    private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
-        try {
-            User u = new User(LoginNome.getText(), LoginCC.getText());
-
-            //u.load(new String(LoginPass.getPassword()));
-            String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
-
-            JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
-        } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Erro ao efetuar login.");
-        }
-    }//GEN-LAST:event_BtnLoginActionPerformed
-
-    private void LoginCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginCCActionPerformed
-
-    }//GEN-LAST:event_LoginCCActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,200 +266,12 @@ public class Menu extends javax.swing.JFrame {
         });
     }
 
-    private String getHashFromEvento(String evento) {
-        String evt = getHash(evento);
-        return evt;
-    }
-
-    //
-    // Método para adicionar novo Evento ao Currículo da pessoa
-    //
-    private void saveEventoToFile(String nomePessoa, String infoEvento) {
-        // Split infoEvento into nomeEvento and dataEvento
-        String[] parts = infoEvento.split(";", 2); // Split into two parts
-        if (parts.length < 2) {
-            JOptionPane.showMessageDialog(this, "Por favor insira o nome do evento e a data em que este ocorreu separados por um ';' ");
-            return;
-        }
-
-        String nomeEvento = parts[0];
-        String dataEvento = parts[1];
-
-        // Create a new Evento object
-        // Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
-        // Evento evento = new Evento(nomePessoa, nomeEvento, dataEvento);
-        // Generate the filename of the person
-        String fileName = nomePessoa.toLowerCase().replace(" ", "") + "curriculum.txt";
-        File file = new File(fileName);
-
-        // Check if the event already exists in the curriculum
-        if (file.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Check if the event already exists by comparing the event name (ignores date)
-                    if (line.contains(nomeEvento)) {
-                        JOptionPane.showMessageDialog(this, "Este evento já existe no currículo!");
-                        return;  // Exit if the event already exists
-                    }
-                }
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro: " + e.getMessage());
-                return;
-            }
-        }
-
-        // File operations: Append new event to the file
-        try (FileWriter writer = new FileWriter(file, true)) {
-            //writer.write(evento.toString() + "\n");
-            JOptionPane.showMessageDialog(this, "Evento inserido com sucesso!");
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao inserir evento: " + e.getMessage());
-        }
-
-        // Update the list of curriculums (listaCurriculos)
-        updateListaCurriculos(nomePessoa);
-    }
-
-    //
-    // Método para atualizar lista de Currículos ao ser inserido um novo nome
-    //
-    private void updateListaCurriculos(String nomePessoa) {
-        File listaFile = new File("listaCurriculos.txt");
-
-        // If the file doesn't exist, create it and add the name immediately
-        if (!listaFile.exists()) {
-            try (FileWriter writer = new FileWriter(listaFile)) {
-                writer.write(nomePessoa + "\n");
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Erro ao criar uma lista de Currículos: " + e.getMessage());
-            }
-            return;
-        }
-
-        // If the file exists, check if the name is already listed
-        try (BufferedReader reader = new BufferedReader(new FileReader(listaFile))) {
-            String line;
-            boolean nameExists = false;
-
-            // Read each line to check if the person's name already exists
-            while ((line = reader.readLine()) != null) {
-                if (line.trim().equalsIgnoreCase(nomePessoa)) {
-                    nameExists = true;
-                    break;
-                }
-            }
-
-            // If the name does not exist, append it to the file
-            if (!nameExists) {
-                try (FileWriter writer = new FileWriter(listaFile, true)) {
-                    writer.write(nomePessoa + "\n");
-                    JOptionPane.showMessageDialog(this, nomePessoa + " adiciona à lista de Currículos.");
-                } catch (IOException e) {
-                    JOptionPane.showMessageDialog(this, "Erro ao atualizar a lista de Currículos: " + e.getMessage());
-                }
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao ler a lista de Currículos: " + e.getMessage());
-        }
-    }
-
-    //
-    // Método para listar as pessoas que têm Currículos
-    //
-    private void loadListaCurriculos() {
-        // Create list model to hold the content
-        listModel = new DefaultListModel<>();
-        list = new JList<>(listModel);
-        JScrollPane scrollPane = new JScrollPane(list);
-
-        // Reference the listaCurriculos.txt file
-        File listaFile = new File("listaCurriculos.txt");
-
-        // Check if the file exists
-        if (!listaFile.exists()) {
-            JOptionPane.showMessageDialog(this, "O ficheiro 'listaCurriculos.txt' não existe.");
-            return;
-        }
-
-        // Read the file and populate the JList with its content
-        try (BufferedReader reader = new BufferedReader(new FileReader(listaFile))) {
-            // Clear the previous content in the list
-            if (listModel != null) {
-                listModel.clear();
-            }
-
-            // Read the file line by line and add each line (person's name) to the list
-            String line;
-            while ((line = reader.readLine()) != null) {
-                listModel.addElement(line);  // Add each name from listaCurriculos.txt
-            }
-
-            JOptionPane.showMessageDialog(this, "Sucesso ao carregar a lista de currículos!");
-        } catch (IOException ex) {
-            // Handle any I/O exceptions
-            JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro 'listaCurriculos.txt': " + ex.getMessage());
-        }
-
-        // Set the model for the jList to display the loaded names
-        //jList1.setModel(listModel);
-    }
-
-    //
-    // Método para carregar Currículo da pessoa selecionada
-    //
-    private void loadFromFile() {
-        // Check if any item is selected in the list
-        String selectedPerson = ""; //jList1.getSelectedValue();
-
-        if (selectedPerson == null) {
-            JOptionPane.showMessageDialog(this, "Selecione uma pessoa da lista.");
-            return;
-        }
-
-        // Convert the person's name to the format of the file name
-        String fileName = selectedPerson.toLowerCase().replace(" ", "") + "curriculum.txt";
-        File file = new File(fileName);
-
-        // Check if the file exists for the selected person
-        if (!file.exists()) {
-            JOptionPane.showMessageDialog(this, "Erro: O ficheiro para " + selectedPerson + " não existe.");
-            return;
-        }
-
-        // Create list model to hold the content
-        listModel = new DefaultListModel<>();
-        list = new JList<>(listModel);
-        JScrollPane scrollPane = new JScrollPane(list);
-
-        // Read the file and populate the JList with its content
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            // Clear the previous content in the list
-            if (listModel != null) {
-                listModel.clear();
-            }
-
-            // Read the file line by line and add each event (line) to the list
-            String line;
-            while ((line = reader.readLine()) != null) {
-                listModel.addElement(line);  // Add each event from the file
-            }
-
-            JOptionPane.showMessageDialog(this, "Currículo de " + selectedPerson + " carregado com sucesso!");
-        } catch (IOException ex) {
-            // Handle any I/O exceptions
-            JOptionPane.showMessageDialog(this, "Erro ao ler o ficheiro: " + ex.getMessage());
-        }
-
-        // Set the model for the jList to display the loaded curriculum events
-        //jList1.setModel(listModel);
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnLogin;
     private javax.swing.JButton BtnRegister;
     private javax.swing.JTextField LoginCC;
     private javax.swing.JTextField LoginNome;
+    private javax.swing.JPasswordField LoginPass;
     private javax.swing.JTextField RegisterCC;
     private javax.swing.JTextField RegisterNome;
     private javax.swing.JPasswordField RegisterPass;
@@ -493,9 +283,10 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
