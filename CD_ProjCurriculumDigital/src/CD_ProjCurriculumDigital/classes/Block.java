@@ -15,6 +15,32 @@ public class Block {
         this.currentHash = calculateHash();
     }
 
+    public String getPreviousHash() {
+        return previousHash;
+    }
+
+    public void setPreviousHash(String previousHash) {
+        this.previousHash = previousHash;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public int getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(int nonce) {
+        this.nonce = nonce;
+    }
+    
+    
+
     public String calculateHash() {
         return Hash.getHash(nonce + previousHash + data);
     }

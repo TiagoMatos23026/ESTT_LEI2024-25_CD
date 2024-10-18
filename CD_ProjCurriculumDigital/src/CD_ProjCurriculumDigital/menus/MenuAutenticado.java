@@ -17,11 +17,11 @@ public class MenuAutenticado extends javax.swing.JFrame {
         initComponents();
         
         try {
-            coin = new TemplarCoin();
-            coin = TemplarCoin.load(fileTemplarCpoin);
+            //coin = new TemplarCoin();
+            //coin = TemplarCoin.load(fileTemplarCpoin);
         } catch (Exception e) {
         }
-        txtLeger.setText(coin.toString());
+        //txtLeger.setText(coin.toString());
         setSize(800, 600);
         setLocationRelativeTo(null);
     }

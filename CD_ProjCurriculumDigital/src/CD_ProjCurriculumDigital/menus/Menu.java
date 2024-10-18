@@ -200,7 +200,7 @@ public class Menu extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
         } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Erro ao efetuar login.");
         }
     }//GEN-LAST:event_BtnLoginActionPerformed
@@ -220,10 +220,10 @@ public class Menu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Utilizador registado com sucesso!");
                 
                 String pub =Base64.getEncoder().encodeToString(u.getPub().getEncoded());
-                txtPublicKey.setText(pub);
-                new MenuAutenticado(u).setVisible(true);
+                //txtPublicKey.setText(pub);
+                //new MenuAutenticado(u).setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
         }else{
