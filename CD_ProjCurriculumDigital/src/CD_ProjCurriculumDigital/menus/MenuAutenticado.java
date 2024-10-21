@@ -6,6 +6,7 @@ package CD_ProjCurriculumDigital.menus;
 
 import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
+import CD_ProjCurriculumDigital.classes.MerkleTree;
 import CD_ProjCurriculumDigital.classes.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
     CurriculumDigital curriculo;
 
     User myUser = null;
+    MerkleTree merkleTree;
 
     public MenuAutenticado() {
         initComponents();
@@ -32,6 +34,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
         try {
             curriculo = new CurriculumDigital();
             curriculo = CurriculumDigital.load(fileCurriculumDigital);
+            merkleTree = new MerkleTree();
         } catch (Exception e) {
         }
 
