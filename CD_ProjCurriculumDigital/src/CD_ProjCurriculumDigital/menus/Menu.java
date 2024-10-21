@@ -199,6 +199,9 @@ public class Menu extends javax.swing.JFrame {
             String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
+            
+            new MenuAutenticado(u).setVisible(true);
+            
         } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Erro ao efetuar login.");

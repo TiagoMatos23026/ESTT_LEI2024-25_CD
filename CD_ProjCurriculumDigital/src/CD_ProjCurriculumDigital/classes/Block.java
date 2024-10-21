@@ -1,8 +1,10 @@
 
 package CD_ProjCurriculumDigital.classes;
 
+import java.io.Serializable;
 
-public class Block {
+
+public class Block implements Serializable{
     String previousHash; // link to previous block
     String data;         // data in the block
     int nonce;           // proof of work 

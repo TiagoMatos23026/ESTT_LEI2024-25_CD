@@ -1,13 +1,14 @@
 package CD_ProjCurriculumDigital.classes;
 
 import CD_Ficha03.utils.SecurityUtils;
+import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Base64;
 import static javax.management.Query.value;
 
-public class Evento {
-    
+public class Evento implements Serializable {
+
     //nome da pessoa
     private String nome;
     private String cc;
@@ -19,11 +20,11 @@ public class Evento {
     private String evento;
     //assinatura digital para garantir validade do evento
     private String signature;
-    
-    public Evento(){
-        
+
+    public Evento() {
+
     }
-    
+
     public Evento(User user, String evento) throws Exception {
         //vai buscar o nome do user
         this.nome = user.getName();
@@ -32,7 +33,7 @@ public class Evento {
         this.pubKey = Base64.getEncoder().encodeToString(user.getPub().getEncoded());
         //cria o evento consoante o que foi introduzido
         this.evento = evento;
-        
+
         //validar o evento com a chave privada
         //gera uma nova signature consoante a privKey (password) que foi introduzida
         sign(user.getPriv());
@@ -45,8 +46,6 @@ public class Evento {
     public void setCC(String cc) {
         this.cc = cc;
     }
-    
-    
 
     public String getNome() {
         return nome;
@@ -87,8 +86,12 @@ public class Evento {
     public void setSignature(String signature) {
         this.signature = signature;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %s, CC: %s, Evento: %s, Válido: %s",
+                nome, cc, evento, isValid() ? "Sim" : "Não");
+    }
 
     ///
     //Método para assinar
@@ -98,8 +101,8 @@ public class Evento {
         byte[] dataSign = SecurityUtils.sign((pubKey + nome).getBytes(), priv);
         this.signature = Base64.getEncoder().encodeToString(dataSign);
     }
-    
-    public boolean isValid() throws Exception {
+
+    public boolean isValid() {
         try {
             PublicKey pub = SecurityUtils.getPublicKey(Base64.getDecoder().decode(pubKey));
             byte[] data = (pubKey + nome).getBytes();
@@ -110,8 +113,8 @@ public class Evento {
         }
 
     }
-    
-    public String listarEventos(){
+
+    public String listarEventos() {
         return null;
     }
 

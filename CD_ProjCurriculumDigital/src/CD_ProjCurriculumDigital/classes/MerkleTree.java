@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author josen
  */
-public class MerkleTree {
+public class MerkleTree implements Serializable{
     // merkle tree hashs
     private List<List<String>> hashTree;
     // elements of tree

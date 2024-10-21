@@ -38,10 +38,10 @@ public class CurriculumDigital implements Serializable {
         StringBuilder txt = new StringBuilder();
         for (Block b : bc.getChain()) {
             Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
-            txt.append(b.getPreviousHash() + " "
-                    + e.toString() + " "
-                    + b.getNonce() + " "
-                    + b.getCurrentHash()
+            txt.append("Hash Anterior: " + b.getPreviousHash() + " "
+                    + "Evento: " + e.toString() + " "
+                    + "Nonce: " + b.getNonce() + " "
+                    + "Hash atual: " + b.getCurrentHash()
                     + "\n"
             );
         }
