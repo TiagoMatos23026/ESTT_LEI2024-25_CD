@@ -7,9 +7,13 @@ package CD_ProjCurriculumDigital.menus;
 import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
 import CD_ProjCurriculumDigital.classes.User;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListModel;
 
 /**
  *
@@ -30,8 +34,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
             curriculo = CurriculumDigital.load(fileCurriculumDigital);
         } catch (Exception e) {
         }
-        //txtLeger.setText(coin.toString());
-        txtCurriculo.setText(curriculo.toString());
+
         setSize(800, 600);
         setLocationRelativeTo(null);
     }
@@ -42,6 +45,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
         this.myUser = u;
         this.txtUser.setText(u.getName());
         this.txtCC.setText(u.getCC());
+
     }
 
     /**
@@ -65,9 +69,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
         btnRegistar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        btnVerCurriculo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtCurriculo = new javax.swing.JTextArea();
+        listaCurriculo = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,30 +153,37 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Ver Currículos", jPanel6);
 
-        jLabel1.setText("O meu Currículo");
+        btnVerCurriculo.setText("Ver o meu Currículo");
+        btnVerCurriculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerCurriculoActionPerformed(evt);
+            }
+        });
 
-        txtCurriculo.setEditable(false);
-        txtCurriculo.setColumns(20);
-        txtCurriculo.setRows(5);
-        jScrollPane1.setViewportView(txtCurriculo);
+        listaCurriculo.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listaCurriculo);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
+                    .addComponent(btnVerCurriculo, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnVerCurriculo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addContainerGap())
         );
@@ -200,22 +211,51 @@ public class MenuAutenticado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUserActionPerformed
 
     private void btnRegistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarActionPerformed
-        try {          
+        try {
             Evento e = new Evento(
                     myUser,
-                    txtEvento.getText()           
+                    txtEvento.getText()
             );
-                    
-            curriculo.add(e);          
-            txtCurriculo.setText(curriculo.toString());
+
+            curriculo.add(e);
 
             curriculo.save(fileCurriculumDigital);
-            
+
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+
+            // Obter a lista de strings do currículo
+            List<String> eventos = curriculo.getCurriculoAsStrings(myUser.getCC());
+
+            // Adicionar os eventos ao modelo da lista
+            for (String evento : eventos) {
+                listModel.addElement(evento);
+            }
+
+            // Definir o modelo no componente listaCurriculo
+            listaCurriculo.setModel(listModel);
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "erro a registar evento");
             Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRegistarActionPerformed
+
+    private void btnVerCurriculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculoActionPerformed
+        // Criar um DefaultListModel para armazenar as strings dos eventos
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+
+        // Obter a lista de strings do currículo
+        List<String> eventos = curriculo.getCurriculoAsStrings(myUser.getCC());
+
+        // Adicionar os eventos ao modelo da lista
+        for (String evento : eventos) {
+            listModel.addElement(evento);
+        }
+
+        // Definir o modelo no componente listaCurriculo
+        listaCurriculo.setModel(listModel);
+
+    }//GEN-LAST:event_btnVerCurriculoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,12 +291,11 @@ public class MenuAutenticado extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistar;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnVerCurriculo;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -266,8 +305,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JList<String> listaCurriculo;
     private javax.swing.JTextField txtCC;
-    private javax.swing.JTextArea txtCurriculo;
     private javax.swing.JTextArea txtEvento;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables

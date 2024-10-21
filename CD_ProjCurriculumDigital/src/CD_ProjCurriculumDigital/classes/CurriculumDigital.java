@@ -78,6 +78,25 @@ public class CurriculumDigital implements Serializable {
 
         return eventos;
     }
+    
+    public List<String> getCurriculoAsStrings (String userCC) {
+    List<String> eventosStrings = new ArrayList<>();
+
+    // Iterar sobre os blocos da blockchain
+    for (Block b : bc.getChain()) {
+        Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
+
+        // Verificar se o CC do evento corresponde ao userCC
+        if (e.getCC().equals(userCC)) {
+            // Criar uma representação em string do evento
+            String eventoString = String.format("Nome: %s, Número de Identificação Civil: %s, Evento: %s", 
+                                                e.getNome(), e.getCC(), e.getEvento());
+            eventosStrings.add(eventoString);
+        }
+    }
+
+    return eventosStrings;
+}
 
     public boolean isValid(Evento e) throws Exception {
 
