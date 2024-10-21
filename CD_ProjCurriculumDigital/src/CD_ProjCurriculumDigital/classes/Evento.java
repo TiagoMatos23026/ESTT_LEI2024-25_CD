@@ -10,6 +10,7 @@ public class Evento {
     
     //nome da pessoa
     private String nome;
+    private String cc;
     //chave publica da pessoa (pode ser o num cc)
     private String pubKey;
     //chave privada da pessoa (password)
@@ -26,6 +27,7 @@ public class Evento {
     public Evento(User user, String evento) throws Exception {
         //vai buscar o nome do user
         this.nome = user.getName();
+        this.cc = user.getCC();
         //vai buscar a public key do user
         this.pubKey = Base64.getEncoder().encodeToString(user.getPub().getEncoded());
         //cria o evento consoante o que foi introduzido
@@ -35,6 +37,58 @@ public class Evento {
         //gera uma nova signature consoante a privKey (password) que foi introduzida
         sign(user.getPriv());
     }
+
+    public String getCC() {
+        return cc;
+    }
+
+    public void setCC(String cc) {
+        this.cc = cc;
+    }
+    
+    
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getPubKey() {
+        return pubKey;
+    }
+
+    public void setPubKey(String pubKey) {
+        this.pubKey = pubKey;
+    }
+
+    public String getPrivKey() {
+        return privKey;
+    }
+
+    public void setPrivKey(String privKey) {
+        this.privKey = privKey;
+    }
+
+    public String getEvento() {
+        return evento;
+    }
+
+    public void setEvento(String evento) {
+        this.evento = evento;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+    
+    
 
     ///
     //Método para assinar

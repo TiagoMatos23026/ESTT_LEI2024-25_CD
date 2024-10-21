@@ -131,6 +131,12 @@ public class User {
         this.sim = SecurityUtils.getAESKey(simData);
     }
     
+    public void loadPublic() throws Exception{
+         //ler a publica
+        byte[] pubData = Files.readAllBytes(Path.of(this.name + ".pub"));
+        this.pub = SecurityUtils.getPublicKey(pubData);
+    }
+    
     public void sign(){
         
     }
