@@ -109,14 +109,14 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nome Completo"/>
+                <Property name="text" type="java.lang.String" value="Nome da Entidade"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="LoginNome">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
-                <Property name="text" type="java.lang.String" value="N&#xfa;mero de Identifica&#xe7;&#xe3;o Civil"/>
+                <Property name="text" type="java.lang.String" value="C&#xf3;digo de Estabelecimento de Ensino (DGES)"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="LoginCC">

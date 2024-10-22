@@ -68,9 +68,9 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Nome Completo");
+        jLabel1.setText("Nome da Entidade");
 
-        jLabel2.setText("Número de Identificação Civil");
+        jLabel2.setText("Código de Estabelecimento de Ensino (DGES)");
 
         jLabel4.setText("Password");
 

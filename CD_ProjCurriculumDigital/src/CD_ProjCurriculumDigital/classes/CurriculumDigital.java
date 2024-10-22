@@ -48,14 +48,14 @@ public class CurriculumDigital implements Serializable {
 
         return txt.toString();
     }
-    
-    public String getLastBlockHash(){
+
+    public String getLastBlockHash() {
         return bc.getLastBlockHash();
     }
-    
-    public List<Block> getChain(){
-        return bc.getChain();       
-    
+
+    public List<Block> getChain() {
+        return bc.getChain();
+
     }
 
     public void save(String fileName) throws IOException {
@@ -72,7 +72,7 @@ public class CurriculumDigital implements Serializable {
         }
     }
 
-    public List<Evento> getCurriculo(String userCC) {
+    public List<Evento> getCurriculoWithUserCC(String userCC) {
         List<Evento> eventos = new ArrayList<>();
 
         // Iterar sobre os blocos da blockchain
@@ -87,7 +87,6 @@ public class CurriculumDigital implements Serializable {
 
         return eventos;
     }
-   
 
     public List<String> getCurriculoAsStrings(String userCC) {
         List<String> eventosStrings = new ArrayList<>();
@@ -140,7 +139,6 @@ public class CurriculumDigital implements Serializable {
     public void add(String data, int difficulty) throws Exception {
         bc.add(data, difficulty);
     }
-    
 
     public void addMkt() throws Exception {
 
@@ -149,30 +147,12 @@ public class CurriculumDigital implements Serializable {
     public List<Evento> getEventoBlockchain() throws Exception {
         List<Evento> lst = new ArrayList<>();
         for (Block b : bc.getChain()) {
-            Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
+            Evento e = new Evento();
+            e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
             lst.add(e);
         }
         return lst;
     }
 
-    public List<String> getUsers() {
-        ArrayList<String> users = new ArrayList<>();
-
-        // Obter usuários a partir do "cc" dos eventos
-        for (Evento event : curriculos) {
-            // Adiciona o CC se ainda não estiver na lista
-            if (!users.contains(event.getCC())) {
-                users.add(event.getCC());
-            }
-        }
-
-        // Criar uma lista com o saldo dos usuários (exemplo baseado no "cc")
-        ArrayList<String> balance = new ArrayList<>();
-        for (String user : users) {
-            balance.add(String.format("%8.2f - %s", getCurriculo(user), user));
-        }
-
-        return balance;
-    }
 
 }

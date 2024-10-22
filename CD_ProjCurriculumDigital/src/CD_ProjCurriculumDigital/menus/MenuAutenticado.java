@@ -16,7 +16,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -24,9 +25,14 @@ import javax.swing.ListModel;
  */
 public class MenuAutenticado extends javax.swing.JFrame {
 
+    //cria um novo objeto que referencia o ficheiro com a blockchain
     public static String fileCurriculumDigital = "curriculumDigital.obj";
+    //cria um objeto do tipo CurriculumDigital
     CurriculumDigital curriculo;
 
+    DefaultListModel model = new DefaultListModel();
+
+    //inicializa myUser
     User myUser = null;
     //criar um objeto merkle tree
     MerkleTree merkleTree;
@@ -38,9 +44,31 @@ public class MenuAutenticado extends javax.swing.JFrame {
             //construir objeto
             curriculo = new CurriculumDigital();
             curriculo = CurriculumDigital.load(fileCurriculumDigital);
-            
-            //construir objeto
+
+            //construir objeto merkletree
             merkleTree = new MerkleTree();
+
+            //cria um list model com os elementos da blockchain
+            DefaultListModel model = new DefaultListModel();
+            for (Block elem : curriculo.getChain()) {
+                model.addElement(elem);
+            }
+
+            listaBlocos.setModel(model);
+
+            /*listaBlocos.addListSelectionListener(new ListSelectionListener() {
+                @Override
+                public void valueChanged(ListSelectionEvent evt) {
+                    if (!evt.getValueIsAdjusting()) { // Evitar ação dupla
+                        String selectedBlock = listaBlocos.getSelectedValue();
+                        if (selectedBlock != null) {
+                            
+                            atualizarListaElementosBloco(selectedBlock);
+                        }
+                    }
+                }
+            });*/
+
         } catch (Exception e) {
         }
 
@@ -48,12 +76,12 @@ public class MenuAutenticado extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
+    //constrói interface com o user recebido (entidade)
     public MenuAutenticado(User u) {
 
         this();
         this.myUser = u;
         this.txtEntidade.setText(u.getName());
-        
 
     }
 
@@ -286,28 +314,30 @@ public class MenuAutenticado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "erro a registar evento");
             Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         }*/
-        
-        
+
         try {
 
+            ArrayList<Evento> EventosList = new ArrayList();
             String[] elements = txtEvento.getText().split("\\n");
-            
-            for (String element : elements){
+
+            for (String element : elements) {
 
                 String nome = txtUser.getText();
                 String cc = txtCC.getText();
                 String evento = element;
                 Evento e = new Evento(
                         nome,
-                        cc,                    
+                        cc,
                         evento
                 );
+                EventosList.add(e);
                 curriculo.addEvento(e);
             }
-            
+
             MerkleTree mt = new MerkleTree(elements);
-           
+
             curriculo.add(mt.getRoot(), 4);
+            curriculo.save(fileCurriculumDigital);
 
             mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
 
@@ -327,13 +357,14 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
         try {
-            List<Evento> curriculos = curriculo.getEventoBlockchain();
+
+            List<Evento> curriculos = curriculo.getCurriculo();
             String s = "";
-            for (Evento evento : curriculos){
+            for (Evento evento : curriculos) {
                 s = s.concat(evento.toString() + "\n");
                 txtVerCurriculos.setText(s);
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -376,6 +407,18 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 new MenuAutenticado().setVisible(true);
             }
         });
+    }
+
+    private void atualizarListaElementosBloco(Block b) {
+        /*DefaultListModel<String> model = new DefaultListModel<>();
+
+        List<Evento> curriculos = curriculo.getCurriculo();
+        List<Evento> curriculos = 
+        for (Evento evento : curriculos) {
+            model.addElement(evento);
+        }
+
+        listaElementosBloco.setModel(model);*/
     }
 
 
