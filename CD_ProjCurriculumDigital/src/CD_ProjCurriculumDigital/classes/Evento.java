@@ -38,6 +38,23 @@ public class Evento implements Serializable {
         //gera uma nova signature consoante a privKey (password) que foi introduzida
         sign(user.getPriv());
     }
+    
+    public Evento(String nome, String cc, String evento) throws Exception {
+        //vai buscar o nome do user
+        this.nome = nome;
+        this.cc = cc;
+        User user = new User(nome, cc);
+        user.generateKeys();
+        
+        //vai buscar a public key do user
+        this.pubKey = Base64.getEncoder().encodeToString(user.getPub().getEncoded());
+        //cria o evento consoante o que foi introduzido
+        this.evento = evento;
+
+        //validar o evento com a chave privada
+        //gera uma nova signature consoante a privKey (password) que foi introduzida
+        sign(user.getPriv());
+    }
 
     public String getCC() {
         return cc;

@@ -46,6 +46,7 @@ public class Blockchain implements Serializable{
         //add new block to the chain
         chain.add(newBlock);
     }
+    
 
     public Block get(int index) {
         return chain.get(index);

@@ -48,6 +48,15 @@ public class CurriculumDigital implements Serializable {
 
         return txt.toString();
     }
+    
+    public String getLastBlockHash(){
+        return bc.getLastBlockHash();
+    }
+    
+    public List<Block> getChain(){
+        return bc.getChain();       
+    
+    }
 
     public void save(String fileName) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(
@@ -78,25 +87,26 @@ public class CurriculumDigital implements Serializable {
 
         return eventos;
     }
-    
-    public List<String> getCurriculoAsStrings (String userCC) {
-    List<String> eventosStrings = new ArrayList<>();
+   
 
-    // Iterar sobre os blocos da blockchain
-    for (Block b : bc.getChain()) {
-        Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
+    public List<String> getCurriculoAsStrings(String userCC) {
+        List<String> eventosStrings = new ArrayList<>();
 
-        // Verificar se o CC do evento corresponde ao userCC
-        if (e.getCC().equals(userCC)) {
-            // Criar uma representação em string do evento
-            String eventoString = String.format("%s", 
-                                                e.getEvento());
-            eventosStrings.add(eventoString);
+        // Iterar sobre os blocos da blockchain
+        for (Block b : bc.getChain()) {
+            Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
+
+            // Verificar se o CC do evento corresponde ao userCC
+            if (e.getCC().equals(userCC)) {
+                // Criar uma representação em string do evento
+                String eventoString = String.format("%s",
+                        e.getEvento());
+                eventosStrings.add(eventoString);
+            }
         }
-    }
 
-    return eventosStrings;
-}
+        return eventosStrings;
+    }
 
     public boolean isValid(Evento e) throws Exception {
 
@@ -119,14 +129,21 @@ public class CurriculumDigital implements Serializable {
         return true;
     }
 
-    public void add(Evento e) throws Exception {
+    public void addEvento(Evento e) throws Exception {
         if (isValid(e)) {
             curriculos.add(e);
-            String txtTransaction = ObjectUtils.convertObjectToBase64((Serializable) e);
-            bc.add(txtTransaction, DIFICULTY);
         } else {
             throw new Exception("Transaction not valid");
         }
+    }
+
+    public void add(String data, int difficulty) throws Exception {
+        bc.add(data, difficulty);
+    }
+    
+
+    public void addMkt() throws Exception {
+
     }
 
     public List<Evento> getEventoBlockchain() throws Exception {
