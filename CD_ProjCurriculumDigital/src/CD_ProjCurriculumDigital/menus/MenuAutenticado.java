@@ -26,14 +26,17 @@ public class MenuAutenticado extends javax.swing.JFrame {
     CurriculumDigital curriculo;
 
     User myUser = null;
+    //criar um objeto merkle tree
     MerkleTree merkleTree;
 
     public MenuAutenticado() {
         initComponents();
 
         try {
+            //construir objeto
             curriculo = new CurriculumDigital();
             curriculo = CurriculumDigital.load(fileCurriculumDigital);
+            //construir objeto
             merkleTree = new MerkleTree();
         } catch (Exception e) {
         }
@@ -71,6 +74,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
         txtEvento = new javax.swing.JTextArea();
         btnRegistar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtVerCurriculos = new javax.swing.JTextArea();
+        btnVerCurriculos = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnVerCurriculo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -116,10 +122,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     .addComponent(txtUser)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txtCC)
+                    .addComponent(btnRegistar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(btnRegistar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,15 +149,36 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Adicionar Evento Curricular", jPanel5);
 
+        txtVerCurriculos.setColumns(20);
+        txtVerCurriculos.setRows(5);
+        jScrollPane4.setViewportView(txtVerCurriculos);
+
+        btnVerCurriculos.setText("jButton1");
+        btnVerCurriculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerCurriculosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addComponent(btnVerCurriculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 565, Short.MAX_VALUE)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVerCurriculos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Ver Currículos", jPanel6);
@@ -215,6 +242,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     private void btnRegistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarActionPerformed
         try {
+            //cria o evento com o user
             Evento e = new Evento(
                     myUser,
                     txtEvento.getText()
@@ -260,6 +288,20 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnVerCurriculoActionPerformed
 
+    private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
+        try {
+            List<Evento> curriculos = curriculo.getEventoBlockchain();
+            String s = "";
+            for (Evento evento : curriculos){
+                s = s.concat(evento.toString() + "\n");
+                txtVerCurriculos.setText(s);
+            }
+            
+        } catch (Exception ex) {
+            Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVerCurriculosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -299,6 +341,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistar;
     private javax.swing.JButton btnVerCurriculo;
+    private javax.swing.JButton btnVerCurriculos;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -307,10 +350,12 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JList<String> listaCurriculo;
     private javax.swing.JTextField txtCC;
     private javax.swing.JTextArea txtEvento;
     private javax.swing.JTextField txtUser;
+    private javax.swing.JTextArea txtVerCurriculos;
     // End of variables declaration//GEN-END:variables
 }

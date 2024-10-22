@@ -89,8 +89,8 @@ public class CurriculumDigital implements Serializable {
         // Verificar se o CC do evento corresponde ao userCC
         if (e.getCC().equals(userCC)) {
             // Criar uma representação em string do evento
-            String eventoString = String.format("Nome: %s, Número de Identificação Civil: %s, Evento: %s", 
-                                                e.getNome(), e.getCC(), e.getEvento());
+            String eventoString = String.format("%s", 
+                                                e.getEvento());
             eventosStrings.add(eventoString);
         }
     }
@@ -129,7 +129,7 @@ public class CurriculumDigital implements Serializable {
         }
     }
 
-    public List<Evento> getTransactionBlockchain() throws Exception {
+    public List<Evento> getEventoBlockchain() throws Exception {
         List<Evento> lst = new ArrayList<>();
         for (Block b : bc.getChain()) {
             Evento e = (Evento) ObjectUtils.convertBase64ToObject(b.getData());
