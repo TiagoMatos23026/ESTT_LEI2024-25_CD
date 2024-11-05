@@ -4,7 +4,7 @@
  */
 package CD_Ficha03;
 
-import CD_Ficha03.utils.SecurityUtils;
+import CD_ProjCurriculumDigital.classes.SecurityUtils;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;

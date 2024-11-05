@@ -13,7 +13,7 @@
 //::                                                               (c)2020   ::
 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 //////////////////////////////////////////////////////////////////////////////
-package CD_Ficha03.utils;
+package CD_ProjCurriculumDigital.classes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

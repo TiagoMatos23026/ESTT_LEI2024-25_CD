@@ -1,6 +1,5 @@
 package CD_ProjCurriculumDigital.classes;
 
-import CD_Ficha03.utils.SecurityUtils;
 import java.io.Serializable;
 import java.security.PrivateKey;
 import java.security.PublicKey;
