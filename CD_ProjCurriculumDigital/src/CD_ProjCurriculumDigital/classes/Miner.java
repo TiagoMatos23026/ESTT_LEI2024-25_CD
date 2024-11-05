@@ -8,7 +8,11 @@ package CD_ProjCurriculumDigital.classes;
  *
  * @author asus
  */
-class Miner {
+public class Miner {
+    
+    public Miner(){
+        
+    }
     //maximum number of Nonce
     public static int MAX_NONCE = (int)1E9;
 

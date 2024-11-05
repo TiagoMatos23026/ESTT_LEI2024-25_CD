@@ -8,16 +8,16 @@ import CD_ProjCurriculumDigital.classes.Block;
 import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
 import CD_ProjCurriculumDigital.classes.MerkleTree;
+import CD_ProjCurriculumDigital.classes.Miner;
 import CD_ProjCurriculumDigital.classes.User;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -50,8 +50,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
             //cria um list model com os elementos da blockchain
             DefaultListModel model = new DefaultListModel();
+            int i = 0;
             for (Block elem : curriculo.getChain()) {
-                model.addElement(elem);
+                model.addElement("Bloco " + i);
+                i++;
             }
 
             listaBlocos.setModel(model);
@@ -68,7 +70,6 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     }
                 }
             });*/
-
         } catch (Exception e) {
         }
 
@@ -111,10 +112,11 @@ public class MenuAutenticado extends javax.swing.JFrame {
         btnVerCurriculos = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaBlocos = new javax.swing.JList<>();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        minedBlock = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        listaElementosBloco = new javax.swing.JList<>();
+        listaBlocos = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -190,11 +192,12 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Adicionar Evento Curricular", jPanel5);
 
+        txtVerCurriculos.setEditable(false);
         txtVerCurriculos.setColumns(20);
         txtVerCurriculos.setRows(5);
         jScrollPane4.setViewportView(txtVerCurriculos);
 
-        btnVerCurriculos.setText("jButton1");
+        btnVerCurriculos.setText("Ver todos os Currículos");
         btnVerCurriculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVerCurriculosActionPerformed(evt);
@@ -226,19 +229,23 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
         jLabel1.setText("Blocos");
 
+        jButton1.setText("Minerar Bloco");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        minedBlock.setColumns(20);
+        minedBlock.setRows(5);
+        jScrollPane5.setViewportView(minedBlock);
+
         listaBlocos.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(listaBlocos);
-
-        listaElementosBloco.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(listaElementosBloco);
+        jScrollPane3.setViewportView(listaBlocos);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -247,8 +254,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -258,9 +266,11 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jScrollPane3)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -342,8 +352,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
             mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
 
             DefaultListModel model = new DefaultListModel();
+            int i= 0;
             for (Block elem : curriculo.getChain()) {
-                model.addElement(elem);
+                model.addElement("Bloco " + i);
+                i++;
             }
 
             listaBlocos.setModel(model);
@@ -373,6 +385,15 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private void txtEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntidadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEntidadeActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
+        Block b = new Block();
+        b = curriculo.getChain().get(parseInt(blocoSelect[1]));
+        
+        
+        atualizarListaElementosBloco(b);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,21 +431,16 @@ public class MenuAutenticado extends javax.swing.JFrame {
     }
 
     private void atualizarListaElementosBloco(Block b) {
-        /*DefaultListModel<String> model = new DefaultListModel<>();
-
-        List<Evento> curriculos = curriculo.getCurriculo();
-        List<Evento> curriculos = 
-        for (Evento evento : curriculos) {
-            model.addElement(evento);
-        }
-
-        listaElementosBloco.setModel(model);*/
+        DefaultListModel model = new DefaultListModel();
+        
+        minedBlock.setText("Nonce: " + Miner.getNonce(b.getPreviousHash()+b.getData(),4));
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistar;
     private javax.swing.JButton btnVerCurriculos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -432,13 +448,13 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JList<String> listaBlocos;
-    private javax.swing.JList<String> listaElementosBloco;
+    private javax.swing.JTextArea minedBlock;
     private javax.swing.JTextField txtCC;
     private javax.swing.JTextField txtEntidade;
     private javax.swing.JTextArea txtEvento;

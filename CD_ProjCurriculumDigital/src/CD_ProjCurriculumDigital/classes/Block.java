@@ -16,6 +16,10 @@ public class Block implements Serializable{
         this.nonce = nonce;
         this.currentHash = calculateHash();
     }
+    
+    public Block(){
+        
+    }
 
     public String getPreviousHash() {
         return previousHash;
