@@ -9,6 +9,7 @@ import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
 import CD_ProjCurriculumDigital.classes.MerkleTree;
 import CD_ProjCurriculumDigital.classes.Miner;
+import CD_ProjCurriculumDigital.classes.MinerConcurrent;
 import CD_ProjCurriculumDigital.classes.User;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
@@ -18,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -352,34 +354,42 @@ public class MenuAutenticado extends javax.swing.JFrame {
             mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
 
             DefaultListModel model = new DefaultListModel();
-            int i= 0;
+            int i = 0;
             for (Block elem : curriculo.getChain()) {
                 model.addElement("Bloco " + i);
                 i++;
             }
 
             listaBlocos.setModel(model);
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-            Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
             Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRegistarActionPerformed
 
     private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
-        try {
+        btnVerCurriculos.setEnabled(false);
+        new Thread(() -> {
+            try {
 
-            List<Evento> curriculos = curriculo.getCurriculo();
-            String s = "";
-            for (Evento evento : curriculos) {
-                s = s.concat(evento.toString() + "\n");
-                txtVerCurriculos.setText(s);
+                List<Evento> curriculos = curriculo.getCurriculo();
+                String s = "";
+
+                for (Evento evento : curriculos) {
+                    s = s.concat(evento.toString() + "\n");
+                    final String f = s;
+
+                    SwingUtilities.invokeLater(() -> {
+                        txtVerCurriculos.setText(f);
+                        btnVerCurriculos.setEnabled(true);
+                    });
+                }
+
+            } catch (Exception ex) {
+                Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        } catch (Exception ex) {
-            Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }).start();
+
     }//GEN-LAST:event_btnVerCurriculosActionPerformed
 
     private void txtEntidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntidadeActionPerformed
@@ -387,12 +397,21 @@ public class MenuAutenticado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEntidadeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
-        Block b = new Block();
-        b = curriculo.getChain().get(parseInt(blocoSelect[1]));
-        
-        
-        atualizarListaElementosBloco(b);
+        jButton1.setEnabled(false);
+
+        new Thread(() -> {
+
+            String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
+            final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
+
+
+            SwingUtilities.invokeLater(() -> {
+
+                atualizarListaElementosBloco(b);
+                jButton1.setEnabled(true);
+            });
+
+        }).start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -432,8 +451,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     private void atualizarListaElementosBloco(Block b) {
         DefaultListModel model = new DefaultListModel();
-        
-        minedBlock.setText("Nonce: " + Miner.getNonce(b.getPreviousHash()+b.getData(),4));
+
+        minedBlock.setText("Nonce: " + MinerConcurrent.getNonce(b.getPreviousHash() + b.getData(), 4));
     }
 
 
