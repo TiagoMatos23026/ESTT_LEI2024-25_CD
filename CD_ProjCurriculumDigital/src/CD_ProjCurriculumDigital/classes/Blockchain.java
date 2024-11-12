@@ -40,9 +40,9 @@ public class Blockchain implements Serializable{
         //hash of previous block
         String prevHash = getLastBlockHash();
         //mining block
-        int nonce = Miner.getNonce(prevHash + data, dificulty);
+        int nonce = MinerConcurrent.getNonce(prevHash + data, dificulty);
         //build new block
-        Block newBlock = new Block(prevHash, data, nonce);
+        Block newBlock = new Block(prevHash, data, nonce, dificulty);
         //add new block to the chain
         chain.add(newBlock);
     }

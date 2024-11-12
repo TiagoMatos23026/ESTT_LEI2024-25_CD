@@ -1,7 +1,6 @@
 package CD_ProjCurriculumDigital.classes;
 
 import CD_ProjCurriculumDigital.classes.Hash;
-import CD_ProjCurriculumDigital.classes.Miner;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,12 +52,15 @@ public class MinerConcurrent {
     public static int getNonce(String data, int dificulty) {
         AtomicInteger sharedNonce = new AtomicInteger(0);
         AtomicInteger truNonce = new AtomicInteger(0);
+        
         int cores = Runtime.getRuntime().availableProcessors();
         Thr[] thr = new Thr[cores];
+        
         for (int i = 0; i < thr.length; i++) {
             thr[i] = new Thr(sharedNonce, truNonce, data, dificulty);
             thr[i].start();
         }
+        
         try {
             //esperar que a primeira termine == todas terminarem
             thr[0].join();
@@ -67,27 +69,5 @@ public class MinerConcurrent {
         }
         return truNonce.get();
     }
-    
-    public static void main(String[] args) {
-        String txt = "hello secure world!!!!";
-        int dif = 5;
-        
-        long timeS = System.currentTimeMillis();
-        int nonces = Miner.getNonce(txt, dif);
-        timeS = System.currentTimeMillis() - timeS;
-        String hash = Hash.getHash(nonces + txt);
-        System.out.println(nonces + " " + hash);
-        
-        
-        long timeP = System.currentTimeMillis();
-        int nonce = getNonce(txt, dif);
-        timeP = System.currentTimeMillis() - timeP;
-        
-        String hash2 = Hash.getHash(nonce + txt);
-        System.out.println(nonce + " " + hash2);
-        
-        System.out.println("Aceleracao = " + timeS / (double)timeP);
-        
-        
-    }
+   
 }

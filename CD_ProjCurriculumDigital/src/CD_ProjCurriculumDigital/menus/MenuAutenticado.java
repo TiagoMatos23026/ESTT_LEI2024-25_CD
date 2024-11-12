@@ -7,8 +7,8 @@ package CD_ProjCurriculumDigital.menus;
 import CD_ProjCurriculumDigital.classes.Block;
 import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
+import CD_ProjCurriculumDigital.classes.Hash;
 import CD_ProjCurriculumDigital.classes.MerkleTree;
-import CD_ProjCurriculumDigital.classes.Miner;
 import CD_ProjCurriculumDigital.classes.MinerConcurrent;
 import CD_ProjCurriculumDigital.classes.User;
 import java.io.IOException;
@@ -39,6 +39,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
     //criar um objeto merkle tree
     MerkleTree merkleTree;
 
+    int difficulty;
+
     public MenuAutenticado() {
         initComponents();
 
@@ -54,7 +56,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
             DefaultListModel model = new DefaultListModel();
             int i = 0;
             for (Block elem : curriculo.getChain()) {
-                model.addElement("Bloco " + i);
+                model.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff() + ")");
                 i++;
             }
 
@@ -98,6 +100,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtVerCurriculos = new javax.swing.JTextArea();
+        btnVerCurriculos = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtUser = new javax.swing.JTextField();
@@ -108,10 +114,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
         txtEvento = new javax.swing.JTextArea();
         btnRegistar = new javax.swing.JButton();
         txtEntidade = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        txtVerCurriculos = new javax.swing.JTextArea();
-        btnVerCurriculos = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtDiff = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -121,6 +125,41 @@ public class MenuAutenticado extends javax.swing.JFrame {
         listaBlocos = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        txtVerCurriculos.setEditable(false);
+        txtVerCurriculos.setColumns(20);
+        txtVerCurriculos.setRows(5);
+        jScrollPane4.setViewportView(txtVerCurriculos);
+
+        btnVerCurriculos.setText("Ver todos os Currículos");
+        btnVerCurriculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerCurriculosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+                    .addComponent(btnVerCurriculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVerCurriculos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Ver Currículos", jPanel6);
 
         jLabel2.setText("Eventos");
 
@@ -152,6 +191,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Dificuldade");
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -168,66 +209,37 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addContainerGap(284, Short.MAX_VALUE))
-                    .addComponent(btnRegistar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnRegistar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDiff)))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtEntidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtDiff, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Adicionar Evento Curricular", jPanel5);
-
-        txtVerCurriculos.setEditable(false);
-        txtVerCurriculos.setColumns(20);
-        txtVerCurriculos.setRows(5);
-        jScrollPane4.setViewportView(txtVerCurriculos);
-
-        btnVerCurriculos.setText("Ver todos os Currículos");
-        btnVerCurriculos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVerCurriculosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                    .addComponent(btnVerCurriculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVerCurriculos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jTabbedPane2.addTab("Ver Currículos", jPanel6);
 
         jLabel1.setText("Blocos");
 
@@ -253,13 +265,13 @@ public class MenuAutenticado extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -270,7 +282,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -327,43 +339,60 @@ public class MenuAutenticado extends javax.swing.JFrame {
             Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
         }*/
 
-        try {
+        new Thread(() -> {
 
-            ArrayList<Evento> EventosList = new ArrayList();
-            String[] elements = txtEvento.getText().split("\\n");
+            try {
+                try {
+                    int diff = Integer.parseInt(txtDiff.getText()); // tenta converter o texto para inteiro
+                    if (diff < 1 || diff > 8) { // verifica se o valor está fora do intervalo de 1 a 8
+                        JOptionPane.showMessageDialog(null, "Número inválido. Por favor, insira um número entre 1 e 8.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        difficulty = diff;
+                    }
+                } catch (NumberFormatException e) {
+                    // Caso o texto não seja um número (ex. letras ou símbolos)
+                    JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, insira um número entre 1 e 8.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
 
-            for (String element : elements) {
+                ArrayList<Evento> EventosList = new ArrayList();
+                String[] elements = txtEvento.getText().split("\\n");
 
-                String nome = txtUser.getText();
-                String cc = txtCC.getText();
-                String evento = element;
-                Evento e = new Evento(
-                        nome,
-                        cc,
-                        evento
-                );
-                EventosList.add(e);
-                curriculo.addEvento(e);
+                for (String element : elements) {
+
+                    String nome = txtUser.getText();
+                    String cc = txtCC.getText();
+                    String evento = element;
+                    Evento e = new Evento(
+                            nome,
+                            cc,
+                            evento
+                    );
+                    EventosList.add(e);
+                    curriculo.addEvento(e);
+                }
+
+                MerkleTree mt = new MerkleTree(elements);
+
+                curriculo.add(mt.getRoot(), difficulty);
+                curriculo.save(fileCurriculumDigital);
+
+                mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
+
+                DefaultListModel model = new DefaultListModel();
+                int i = 0;
+                for (Block elem : curriculo.getChain()) {
+                    model.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff()+ ")");
+                    i++;
+                }
+
+                listaBlocos.setModel(model);
+            } catch (Exception ex) {
+                Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            MerkleTree mt = new MerkleTree(elements);
+        }).start();
 
-            curriculo.add(mt.getRoot(), 4);
-            curriculo.save(fileCurriculumDigital);
 
-            mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
-
-            DefaultListModel model = new DefaultListModel();
-            int i = 0;
-            for (Block elem : curriculo.getChain()) {
-                model.addElement("Bloco " + i);
-                i++;
-            }
-
-            listaBlocos.setModel(model);
-        } catch (Exception ex) {
-            Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_btnRegistarActionPerformed
 
     private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
@@ -402,12 +431,14 @@ public class MenuAutenticado extends javax.swing.JFrame {
         new Thread(() -> {
 
             String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
+            
             final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
-
+            
+            final int diff = b.getDiff();
 
             SwingUtilities.invokeLater(() -> {
 
-                atualizarListaElementosBloco(b);
+                atualizarListaElementosBloco(b, diff);
                 jButton1.setEnabled(true);
             });
 
@@ -449,10 +480,13 @@ public class MenuAutenticado extends javax.swing.JFrame {
         });
     }
 
-    private void atualizarListaElementosBloco(Block b) {
+    private void atualizarListaElementosBloco(Block b, int diff) {
+        String msg = b.getPreviousHash() + b.getData();
+        int nonce = MinerConcurrent.getNonce(msg, b.getDiff());
+        
         DefaultListModel model = new DefaultListModel();
 
-        minedBlock.setText("Nonce: " + MinerConcurrent.getNonce(b.getPreviousHash() + b.getData(), 4));
+        minedBlock.setText("Hash: " + Hash.getHash(nonce + msg));
     }
 
 
@@ -464,6 +498,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -475,6 +510,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
     private javax.swing.JList<String> listaBlocos;
     private javax.swing.JTextArea minedBlock;
     private javax.swing.JTextField txtCC;
+    private javax.swing.JTextField txtDiff;
     private javax.swing.JTextField txtEntidade;
     private javax.swing.JTextArea txtEvento;
     private javax.swing.JTextField txtUser;

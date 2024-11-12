@@ -9,12 +9,22 @@ public class Block implements Serializable{
     String data;         // data in the block
     int nonce;           // proof of work 
     String currentHash;  // Hash of block
+    int diff;
 
-    public Block(String previousHash, String data, int nonce) {
+    public Block(String previousHash, String data, int nonce, int diff) {
         this.previousHash = previousHash;
         this.data = data;
         this.nonce = nonce;
         this.currentHash = calculateHash();
+        this.diff = diff;
+    }
+
+    public int getDiff() {
+        return diff;
+    }
+
+    public void setDiff(int diff) {
+        this.diff = diff;
     }
     
     public Block(){
