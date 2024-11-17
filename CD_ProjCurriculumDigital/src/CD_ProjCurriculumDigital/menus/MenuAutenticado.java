@@ -399,7 +399,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegistarActionPerformed
 
-    //Usando threads, lista todos os curriculos inseridos pelo utilizador, e mostra-os na JTextArea "txtVerCurriculos" no formato Nome, nºCC, evento e validade
+    //Usando threads, lista todos os curriculos inseridos pelo utilizador, e mostra-os na JTextArea "txtVerCurriculos" no formato Nome, nºCC, evento e validade do bloco
     private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
         btnVerCurriculos.setEnabled(false);
         new Thread(() -> {
