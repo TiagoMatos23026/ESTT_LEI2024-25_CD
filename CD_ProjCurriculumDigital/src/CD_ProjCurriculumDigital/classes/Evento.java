@@ -10,6 +10,7 @@ public class Evento implements Serializable {
 
     //nome da pessoa
     private String nome;
+    //nº CC da pessoa
     private String cc;
     //chave publica da pessoa (pode ser o num cc)
     private String pubKey;
@@ -27,6 +28,7 @@ public class Evento implements Serializable {
     public Evento(User user, String evento) throws Exception {
         //vai buscar o nome do user
         this.nome = user.getName();
+        //vai buscar o nºCC do user
         this.cc = user.getCC();
         //vai buscar a public key do user
         this.pubKey = Base64.getEncoder().encodeToString(user.getPub().getEncoded());
@@ -39,7 +41,7 @@ public class Evento implements Serializable {
     }
     
     public Evento(String nome, String cc, String evento) throws Exception {
-        //vai buscar o nome do user
+        //vai buscar o nome e nºCC do user e cria-o
         this.nome = nome;
         this.cc = cc;
         User user = new User(nome, cc);

@@ -310,6 +310,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
+    /*Registo de um evento curricular, após inserido o nome completo, número de identificação civil,
+    o(s) evento(s) e a dificuldade do bloco
+    O registo do evento é feito usando threads, para que não tenhamos uma interface bloqueante
+    */
     private void btnRegistarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistarActionPerformed
         /*try {
             //cria o evento com o user
@@ -395,6 +399,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegistarActionPerformed
 
+    //Usando threads, lista todos os curriculos inseridos pelo utilizador, e mostra-os na JTextArea "txtVerCurriculos" no formato Nome, nºCC, evento e validade
     private void btnVerCurriculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerCurriculosActionPerformed
         btnVerCurriculos.setEnabled(false);
         new Thread(() -> {
@@ -425,6 +430,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEntidadeActionPerformed
 
+    //Botão que minera o bloco
+    //O bloco é minerado usando Threads, para que a interface não se torne bloqueante
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jButton1.setEnabled(false);
 
@@ -480,6 +487,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
         });
     }
 
+    //Mostra o hash do blocc minerado na JTextArea "minedBlock"
     private void atualizarListaElementosBloco(Block b, int diff) {
         String msg = b.getPreviousHash() + b.getData();
         int nonce = MinerConcurrent.getNonce(msg, b.getDiff());

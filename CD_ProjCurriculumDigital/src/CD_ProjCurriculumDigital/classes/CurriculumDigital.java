@@ -49,6 +49,7 @@ public class CurriculumDigital implements Serializable {
         return txt.toString();
     }
 
+    //retorna o valor do hash do ultimo bloco
     public String getLastBlockHash() {
         return bc.getLastBlockHash();
     }

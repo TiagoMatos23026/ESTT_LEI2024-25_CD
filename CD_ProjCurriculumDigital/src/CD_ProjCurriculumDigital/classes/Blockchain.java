@@ -64,18 +64,21 @@ public class Blockchain implements Serializable{
        return chain;
     }
 
+    //guarda o objeto na blockchain
     public void save(String fileName) throws Exception {
         try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
             out.writeObject(chain);
         }
     }
 
+    //lê o objeto da blockchain
     public void load(String fileName) throws Exception {
         try ( ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
             this.chain = (ArrayList<Block>) in.readObject();
         }
     }
 
+    //verifica se a blockchain é válido
     public boolean isValid() {
         //Validate blocks
         for (Block block : chain) {

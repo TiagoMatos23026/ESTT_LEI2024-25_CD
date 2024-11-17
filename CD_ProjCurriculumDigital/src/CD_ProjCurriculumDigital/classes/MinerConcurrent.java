@@ -49,13 +49,14 @@ public class MinerConcurrent {
     //maximum number of Nonce
     public static int MAX_NONCE = (int) 1E9;
 
+    //Usando threads, obtém o valor do nonce
     public static int getNonce(String data, int dificulty) {
         AtomicInteger sharedNonce = new AtomicInteger(0);
         AtomicInteger truNonce = new AtomicInteger(0);
-        
+        //nº de cores disponíveis
         int cores = Runtime.getRuntime().availableProcessors();
         Thr[] thr = new Thr[cores];
-        
+        //inicializa as threads
         for (int i = 0; i < thr.length; i++) {
             thr[i] = new Thr(sharedNonce, truNonce, data, dificulty);
             thr[i].start();

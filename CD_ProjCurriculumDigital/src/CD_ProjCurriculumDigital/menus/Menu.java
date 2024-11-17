@@ -191,6 +191,8 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //efetua o login do user, com os dados inseridos em loginNome, loginCC e loginPass
+    //se algum dos campos estiver errado, manda uma mensagem de erro
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
         try {
             User u = new User(LoginNome.getText(), LoginCC.getText());
@@ -212,6 +214,7 @@ public class Menu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_RegisterNomeActionPerformed
 
+    //cria o utilizador, se as palavras passe forem iguais (RegisterPass = RegisterPassConf)
     private void BtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegisterActionPerformed
         if (Arrays.equals(RegisterPass.getPassword(), RegisterPassConf.getPassword())) {
             try {
