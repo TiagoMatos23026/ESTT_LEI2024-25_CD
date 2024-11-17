@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/Block.java</file>
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/CurriculumDigital.java</file>
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/Blockchain.java</file>
@@ -15,6 +16,15 @@
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/MinerConcurrent.java</file>
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/ObjectUtils.java</file>
             <file>file:/C:/Users/josen/OneDrive/Documentos/NetBeansProjects/ESTT_LEI2024-25_CD/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/SecurityUtils.java</file>
+=======
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/menus/MenuAutenticado.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/Hash.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/MinerConcurrent.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/MerkleTree.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/Blockchain.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_Ficha04/testePi/testePi.java</file>
+            <file>file:/C:/Users/asus/Documents/Repositories/2024_25_CompDist/CD_ProjCurriculumDigital/src/CD_ProjCurriculumDigital/classes/Block.java</file>
+>>>>>>> 3d2c8ee524b993e1db6e077546a4aaec7f3e29d1
         </group>
     </open-files>
 </project-private>
