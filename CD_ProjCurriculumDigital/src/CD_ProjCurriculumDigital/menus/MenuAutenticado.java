@@ -145,17 +145,16 @@ public class MenuAutenticado extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                    .addComponent(btnVerCurriculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnVerCurriculos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVerCurriculos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVerCurriculos, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -233,9 +232,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRegistar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -250,7 +249,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
             }
         });
 
-        minedBlock.setColumns(20);
+        minedBlock.setColumns(32);
         minedBlock.setRows(5);
         jScrollPane5.setViewportView(minedBlock);
 
@@ -282,9 +281,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -340,7 +339,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
         }*/
 
         new Thread(() -> {
-
+            btnRegistar.setEnabled(false);
+            
             try {
                 try {
                     int diff = Integer.parseInt(txtDiff.getText()); // tenta converter o texto para inteiro
@@ -381,11 +381,16 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 DefaultListModel model = new DefaultListModel();
                 int i = 0;
                 for (Block elem : curriculo.getChain()) {
-                    model.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff()+ ")");
+                    model.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff() + ")");
                     i++;
                 }
 
-                listaBlocos.setModel(model);
+                SwingUtilities.invokeLater(() -> {
+
+                    listaBlocos.setModel(model);
+                    btnRegistar.setEnabled(true);
+                });
+
             } catch (Exception ex) {
                 Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -431,15 +436,18 @@ public class MenuAutenticado extends javax.swing.JFrame {
         new Thread(() -> {
 
             String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
-            
+
             final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
-            
+
             final int diff = b.getDiff();
+            
+            String msg = atualizarListaElementosBloco(b,diff);
 
             SwingUtilities.invokeLater(() -> {
-
-                atualizarListaElementosBloco(b, diff);
+         
+                minedBlock.setText(msg);
                 jButton1.setEnabled(true);
+                
             });
 
         }).start();
@@ -448,45 +456,13 @@ public class MenuAutenticado extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuAutenticado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuAutenticado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuAutenticado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuAutenticado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuAutenticado().setVisible(true);
-            }
-        });
-    }
-
-    private void atualizarListaElementosBloco(Block b, int diff) {
+    private String atualizarListaElementosBloco(Block b, int diff) {
         String msg = b.getPreviousHash() + b.getData();
         int nonce = MinerConcurrent.getNonce(msg, b.getDiff());
-        
+
         DefaultListModel model = new DefaultListModel();
 
-        minedBlock.setText("Hash: " + Hash.getHash(nonce + msg));
+        return ("Hash: " + Hash.getHash(nonce + msg));
     }
 
 

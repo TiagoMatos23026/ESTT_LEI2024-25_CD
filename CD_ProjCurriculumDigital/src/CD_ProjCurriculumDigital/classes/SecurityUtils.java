@@ -399,11 +399,6 @@ public class SecurityUtils {
         return cipher;
     }
 
-    public static void main(String[] args) throws Exception {
-        byte[] secret = encrypt("Ola".getBytes(), "pass");
-        byte[] plain = decrypt(secret, "pass");
-        System.out.println(new String(plain));
-    }
 
     //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
     //:::::::::::               ENCRYPT /  DECRYPT                   :::::::::::
