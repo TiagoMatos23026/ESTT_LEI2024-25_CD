@@ -4,19 +4,27 @@
  */
 package CD_ProjCurriculumDigital.menus;
 
+import CD_ProjCurriculumDigital.classes.InterfaceRemota;
+import CD_ProjCurriculumDigital.classes.ObjetoRemoto;
+import CD_ProjCurriculumDigital.classes.P2Plistener;
+import CD_ProjCurriculumDigital.classes.RMI;
 import CD_ProjCurriculumDigital.classes.User;
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author asus
  */
-public class Menu extends javax.swing.JFrame {
+public class Menu extends javax.swing.JFrame implements P2Plistener{
 
+    
+    ObjetoRemoto myremoteObject;
     /**
      * Creates new form Menu
      */
@@ -54,6 +62,10 @@ public class Menu extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         RegisterPass = new javax.swing.JPasswordField();
         RegisterPassConf = new javax.swing.JPasswordField();
+        jPanel3 = new javax.swing.JPanel();
+        btnConectar = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtNodeAddress = new javax.swing.JTextField();
 
         jLabel3.setText("jLabel3");
 
@@ -69,6 +81,12 @@ public class Menu extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Nome da Entidade");
+
+        LoginNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoginNomeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Código de Estabelecimento de Ensino (DGES)");
 
@@ -177,6 +195,41 @@ public class Menu extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Registo", jPanel2);
 
+        btnConectar.setText("Conectar ao servidor");
+        btnConectar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConectarActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setText("Endereço:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnConectar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(txtNodeAddress))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNodeAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addComponent(btnConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Conexão", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,16 +245,12 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
-        try {
-            User u = new User(LoginNome.getText(), LoginCC.getText());
-
-            u.load(new String(LoginPass.getPassword()));
-            String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
+        try {   
+            User u = myremoteObject.login(LoginNome.getText(), LoginCC.getText(), LoginPass.getPassword());
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
-            
             new MenuAutenticado(u).setVisible(true);
-            
+
         } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Erro ao efetuar login.");
@@ -213,26 +262,36 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_RegisterNomeActionPerformed
 
     private void BtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegisterActionPerformed
+        
         if (Arrays.equals(RegisterPass.getPassword(), RegisterPassConf.getPassword())) {
+            boolean success;
+            
             try {
-
-                User u = new User(RegisterNome.getText(), RegisterCC.getText());
-                u.generateKeys();
-
-                u.save(new String(RegisterPass.getPassword()));
-                JOptionPane.showMessageDialog(this, "Utilizador registado com sucesso!");
-                
-                String pub =Base64.getEncoder().encodeToString(u.getPub().getEncoded());
-                //txtPublicKey.setText(pub);
-                //new MenuAutenticado(u).setVisible(true);
+                success = myremoteObject.register(RegisterNome.getText(), RegisterCC.getText(), RegisterPass.getPassword());
             } catch (Exception ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Erro ao criar utilizador");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "As passwords são diferentes.");
         }
     }//GEN-LAST:event_BtnRegisterActionPerformed
+
+    private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
+        try {
+            String address = txtNodeAddress.getText();
+            InterfaceRemota node = (InterfaceRemota) RMI.getRemote(address);
+
+            myremoteObject.addNode(node);
+        } catch (Exception ex) {
+            onException(ex, "connect");
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }       // TODO add your handling code here:
+    }//GEN-LAST:event_btnConectarActionPerformed
+
+    private void LoginNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LoginNomeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,7 +338,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JTextField RegisterNome;
     private javax.swing.JPasswordField RegisterPass;
     private javax.swing.JPasswordField RegisterPassConf;
+    private javax.swing.JButton btnConectar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -290,6 +351,64 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField txtNodeAddress;
     // End of variables declaration//GEN-END:variables
+
+    /*@Override
+    public void onStart(String message) {
+        
+        imgServerRunning.setEnabled(true);
+        btStartServer.setEnabled(false);
+        GuiUtils.addText(txtServerLog, "Start server", message);
+    }*/
+        
+
+    public void onException(Exception e, String title) {
+        JOptionPane.showMessageDialog(this, e.getMessage(), title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void onConect(String address) {
+        try {
+            List<InterfaceRemota> net = myremoteObject.getNetwork();
+            String txt = "";
+            for (InterfaceRemota iremoteP2P : net) {
+                txt += iremoteP2P.getAdress() + "\n";
+            }
+        } catch (RemoteException ex) {
+            onException(ex, "On conect");
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    /*
+    @Override
+    public void onTransaction(String transaction) {
+        try {
+            String txt = "";
+            List<String> tr = myremoteObject.getTransactions();
+            for (String string : tr) {
+                txt += string + "\n";
+
+            }
+            txtLstTransdactions.setText(txt);
+        } catch (RemoteException ex) {
+            onException(ex, "on transaction");
+            Logger.getLogger(NodeP2PGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }*/
+
+    @Override
+    public void onStart(String message) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void onTransaction(String transaction) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
