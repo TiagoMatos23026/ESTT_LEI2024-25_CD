@@ -22,5 +22,7 @@ public interface InterfaceRemota extends Remote {
     public List<String> getTransactions() throws RemoteException;
     public void removeTransaction(String data )throws RemoteException;
     public void sinchronizeTransactions(InterfaceRemota node) throws RemoteException;
+    public boolean register(String nome, String cc, char[] pass) throws RemoteException;
+    public User login(String nome, String cc, char[] pass) throws RemoteException;
 
 }

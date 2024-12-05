@@ -10,6 +10,7 @@ import CD_ProjCurriculumDigital.classes.P2Plistener;
 import CD_ProjCurriculumDigital.classes.RMI;
 import CD_ProjCurriculumDigital.classes.User;
 import java.rmi.RemoteException;
+import java.rmi.Naming;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Arrays;
@@ -21,10 +22,13 @@ import javax.swing.JOptionPane;
  *
  * @author asus
  */
-public class Menu extends javax.swing.JFrame implements P2Plistener{
+public class Menu extends javax.swing.JFrame implements P2Plistener {
 
-    
+    String nome;
+    String cc;
+    char[] pass;
     ObjetoRemoto myremoteObject;
+
     /**
      * Creates new form Menu
      */
@@ -245,8 +249,15 @@ public class Menu extends javax.swing.JFrame implements P2Plistener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginActionPerformed
-        try {   
-            User u = myremoteObject.login(LoginNome.getText(), LoginCC.getText(), LoginPass.getPassword());
+        try {
+            String address = txtNodeAddress.getText();
+            InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
+
+            nome = LoginNome.getText();
+            cc = LoginCC.getText();
+            pass = LoginPass.getPassword();
+
+            User u = myremoteObject.login(nome, cc, pass);
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
             new MenuAutenticado(u).setVisible(true);
@@ -262,15 +273,25 @@ public class Menu extends javax.swing.JFrame implements P2Plistener{
     }//GEN-LAST:event_RegisterNomeActionPerformed
 
     private void BtnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnRegisterActionPerformed
-        
+
         if (Arrays.equals(RegisterPass.getPassword(), RegisterPassConf.getPassword())) {
             boolean success;
-            
+
             try {
+                String address = txtNodeAddress.getText();
+                InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
+
                 success = myremoteObject.register(RegisterNome.getText(), RegisterCC.getText(), RegisterPass.getPassword());
+
+                if (success) {
+                    JOptionPane.showMessageDialog(this, "Utilizador criado com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao registar.");
+                }
+
             } catch (Exception ex) {
                 Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, "Erro ao criar utilizador");
+                JOptionPane.showMessageDialog(this, "Erro ao criar utilizador.");
             }
         } else {
             JOptionPane.showMessageDialog(this, "As passwords são diferentes.");
@@ -280,9 +301,13 @@ public class Menu extends javax.swing.JFrame implements P2Plistener{
     private void btnConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConectarActionPerformed
         try {
             String address = txtNodeAddress.getText();
+            InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address); // Perform RMI lookup
             InterfaceRemota node = (InterfaceRemota) RMI.getRemote(address);
 
             myremoteObject.addNode(node);
+            JOptionPane.showMessageDialog(this, "Conectado!");
+            btnConectar.setEnabled(false);
+
         } catch (Exception ex) {
             onException(ex, "connect");
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -363,8 +388,6 @@ public class Menu extends javax.swing.JFrame implements P2Plistener{
         btStartServer.setEnabled(false);
         GuiUtils.addText(txtServerLog, "Start server", message);
     }*/
-        
-
     public void onException(Exception e, String title) {
         JOptionPane.showMessageDialog(this, e.getMessage(), title, JOptionPane.WARNING_MESSAGE);
     }
@@ -400,7 +423,6 @@ public class Menu extends javax.swing.JFrame implements P2Plistener{
             Logger.getLogger(NodeP2PGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }*/
-
     @Override
     public void onStart(String message) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
