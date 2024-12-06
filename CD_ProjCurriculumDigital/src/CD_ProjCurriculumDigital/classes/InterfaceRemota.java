@@ -23,6 +23,6 @@ public interface InterfaceRemota extends Remote {
     public void removeTransaction(String data )throws RemoteException;
     public void sinchronizeTransactions(InterfaceRemota node) throws RemoteException;
     public boolean register(String nome, String cc, char[] pass) throws RemoteException;
-    public User login(String nome, String cc, char[] pass) throws RemoteException;
+    public boolean login(String nome, String cc, char[] pass) throws RemoteException;
 
 }

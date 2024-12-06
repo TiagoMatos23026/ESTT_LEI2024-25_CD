@@ -6,6 +6,7 @@ package CD_ProjCurriculumDigital.classes;
 
 import CD_ProjCurriculumDigital.menus.Menu;
 import CD_ProjCurriculumDigital.menus.MenuAutenticado;
+import CD_ProjCurriculumDigital.classes.User;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -153,17 +154,19 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
         }
     }
 
-    public User login(String nome, String cc, char[] pass) throws RemoteException {
+    public boolean login(String nome, String cc, char[] pass) throws RemoteException {
         User u = new User(nome, cc);
-
+   
         try {
             u.load(new String(pass));
+            
         } catch (Exception ex) {
             Logger.getLogger(ObjetoRemoto.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
         String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
-
-        return u;
+       
+        return true;
     }
 
     @Override

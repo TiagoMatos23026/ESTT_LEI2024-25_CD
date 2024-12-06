@@ -256,8 +256,11 @@ public class Menu extends javax.swing.JFrame implements P2Plistener {
             nome = LoginNome.getText();
             cc = LoginCC.getText();
             pass = LoginPass.getPassword();
+            
+            User u = new User(nome, cc);
+            
 
-            User u = myremoteObject.login(nome, cc, pass);
+            boolean loginSuccess = myremoteObject.login(nome, cc, pass);
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
             new MenuAutenticado(u).setVisible(true);

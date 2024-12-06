@@ -16,18 +16,18 @@ import java.security.PublicKey;
  * @author asus
  */
 public class User {
-    String name;
+    private String name;
     
-    String cc;
+    private String cc;
     
     //chave pública
-    PublicKey pub;
+    private transient PublicKey pub;
     
     //chave privada
-    PrivateKey priv;
+    private transient PrivateKey priv;
     
     //chave simétrica
-    Key sim;
+    private transient Key sim;
     
     public User(String name, String cc){
         this.name = name;
