@@ -29,6 +29,7 @@ import javax.swing.SwingUtilities;
  * @author asus
  */
 public class MenuAutenticado extends javax.swing.JFrame {
+
     ObjetoRemoto myremoteObject;
     //cria um novo objeto que referencia o ficheiro com a blockchain
     public static String fileCurriculumDigital = "curriculumDigital.obj";
@@ -41,7 +42,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
     User myUser = null;
     //criar um objeto merkle tree
     MerkleTree merkleTree;
-    
+
     String address = null;
 
     int difficulty;
@@ -346,8 +347,9 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
         new Thread(() -> {
             btnRegistar.setEnabled(false);
-            
+
             try {
+                InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
                 try {
                     int diff = Integer.parseInt(txtDiff.getText()); // tenta converter o texto para inteiro
                     if (diff < 1 || diff > 8) { // verifica se o valor está fora do intervalo de 1 a 8
@@ -360,6 +362,15 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Entrada inválida. Por favor, insira um número entre 1 e 8.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
 
+                boolean success = myremoteObject.registerEventos(txtEvento.getText(), txtUser.getText(), txtCC.getText(), difficulty);
+                if (!success) {
+                    JOptionPane.showMessageDialog(null, "Erro ao registar Evento", "Erro", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    String user = txtUser.getText();
+                    JOptionPane.showMessageDialog(null, "Eventos adicionados ao currículo digital de" +  curriculo.getChain().toString());
+                }
+
+                /*
                 ArrayList<Evento> EventosList = new ArrayList();
                 String[] elements = txtEvento.getText().split("\\n");
 
@@ -384,19 +395,20 @@ public class MenuAutenticado extends javax.swing.JFrame {
 
                 mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
 
-                DefaultListModel model = new DefaultListModel();
+                 */
+                final DefaultListModel modelFinal = new DefaultListModel();
                 int i = 0;
                 for (Block elem : curriculo.getChain()) {
-                    model.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff() + ")");
+                    modelFinal.addElement("Bloco " + i + " (Dificuldade: " + elem.getDiff() + ")");
                     i++;
                 }
 
-                SwingUtilities.invokeLater(() -> {
+               SwingUtilities.invokeLater(() -> {
 
-                    listaBlocos.setModel(model);
+                    listaBlocos.setModel(modelFinal);
                     btnRegistar.setEnabled(true);
+                    listaBlocos.repaint();
                 });
-
             } catch (Exception ex) {
                 Logger.getLogger(MenuAutenticado.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -410,10 +422,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
         btnVerCurriculos.setEnabled(false);
         new Thread(() -> {
             try {
-                
+
                 InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
                 List<Evento> curriculos = myremoteObject.getCurriculos();
-                
+
                 String s = "";
 
                 for (Evento evento : curriculos) {
@@ -448,14 +460,14 @@ public class MenuAutenticado extends javax.swing.JFrame {
             final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
 
             final int diff = b.getDiff();
-            
-            String msg = atualizarListaElementosBloco(b,diff);
+
+            String msg = atualizarListaElementosBloco(b, diff);
 
             SwingUtilities.invokeLater(() -> {
-         
+
                 minedBlock.setText(msg);
                 jButton1.setEnabled(true);
-                
+
             });
 
         }).start();

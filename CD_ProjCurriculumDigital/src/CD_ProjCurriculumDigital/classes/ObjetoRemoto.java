@@ -4,6 +4,7 @@
  */
 package CD_ProjCurriculumDigital.classes;
 
+import static CD_ProjCurriculumDigital.menus.MenuAutenticado.fileCurriculumDigital;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -181,6 +182,41 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public boolean registerEventos(String eventosList, String user, String numcc, int diff) throws RemoteException {
+
+        try {
+            ArrayList<Evento> EventosList = new ArrayList();
+            String[] elements = eventosList.split("\\n");
+
+            for (String element : elements) {
+
+                String nome = user;
+                String cc = numcc;
+                String evento = element;
+
+                Evento e = new Evento(
+                        nome,
+                        cc,
+                        evento
+                );
+                EventosList.add(e);
+                curriculo.addEvento(e);
+            }
+
+            MerkleTree mt = new MerkleTree(elements);
+
+            curriculo.add(mt.getRoot(), diff);
+            curriculo.save(fileCurriculumDigital);
+
+            mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
+            
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 
     @Override
