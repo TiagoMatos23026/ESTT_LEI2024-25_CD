@@ -4,9 +4,6 @@
  */
 package CD_ProjCurriculumDigital.classes;
 
-import CD_ProjCurriculumDigital.menus.Menu;
-import CD_ProjCurriculumDigital.menus.MenuAutenticado;
-import CD_ProjCurriculumDigital.classes.User;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -28,6 +25,10 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
     CopyOnWriteArrayList<InterfaceRemota> network;
     CopyOnWriteArraySet<String> transactions;
     P2Plistener listener;
+
+    public static String fileCurriculumDigital = "curriculumDigital.obj";
+    //cria um objeto do tipo CurriculumDigital
+    CurriculumDigital curriculo;
 
     public ObjetoRemoto(String address, P2Plistener listener) throws RemoteException {
         super(RMI.getAdressPort(address));
@@ -149,24 +150,37 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
 
             u.save(new String(pass));
             return true;
-        } catch  (Exception ex){
+        } catch (Exception ex) {
             return false;
         }
     }
 
     public boolean login(String nome, String cc, char[] pass) throws RemoteException {
         User u = new User(nome, cc);
-   
+
         try {
             u.load(new String(pass));
-            
+
         } catch (Exception ex) {
             Logger.getLogger(ObjetoRemoto.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         String pub = Base64.getEncoder().encodeToString(u.getPub().getEncoded());
-       
+
         return true;
+    }
+
+    public List<Evento> getCurriculos() throws RemoteException {
+        try {
+            curriculo = new CurriculumDigital();
+            curriculo = CurriculumDigital.load(fileCurriculumDigital);
+
+            List<Evento> curriculos = curriculo.getCurriculo();
+
+            return curriculos;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

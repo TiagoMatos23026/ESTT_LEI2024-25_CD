@@ -8,11 +8,14 @@ import CD_ProjCurriculumDigital.classes.Block;
 import CD_ProjCurriculumDigital.classes.CurriculumDigital;
 import CD_ProjCurriculumDigital.classes.Evento;
 import CD_ProjCurriculumDigital.classes.Hash;
+import CD_ProjCurriculumDigital.classes.InterfaceRemota;
 import CD_ProjCurriculumDigital.classes.MerkleTree;
 import CD_ProjCurriculumDigital.classes.MinerConcurrent;
+import CD_ProjCurriculumDigital.classes.ObjetoRemoto;
 import CD_ProjCurriculumDigital.classes.User;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
+import java.rmi.Naming;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,7 +29,7 @@ import javax.swing.SwingUtilities;
  * @author asus
  */
 public class MenuAutenticado extends javax.swing.JFrame {
-
+    ObjetoRemoto myremoteObject;
     //cria um novo objeto que referencia o ficheiro com a blockchain
     public static String fileCurriculumDigital = "curriculumDigital.obj";
     //cria um objeto do tipo CurriculumDigital
@@ -38,6 +41,8 @@ public class MenuAutenticado extends javax.swing.JFrame {
     User myUser = null;
     //criar um objeto merkle tree
     MerkleTree merkleTree;
+    
+    String address = null;
 
     int difficulty;
 
@@ -82,9 +87,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
     }
 
     //constrói interface com o user recebido (entidade)
-    public MenuAutenticado(User u) {
+    public MenuAutenticado(User u, String addr) {
 
         this();
+        this.address = addr;
         this.myUser = u;
         this.txtEntidade.setText(u.getName());
 
@@ -404,8 +410,10 @@ public class MenuAutenticado extends javax.swing.JFrame {
         btnVerCurriculos.setEnabled(false);
         new Thread(() -> {
             try {
-
-                List<Evento> curriculos = curriculo.getCurriculo();
+                
+                InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
+                List<Evento> curriculos = myremoteObject.getCurriculos();
+                
                 String s = "";
 
                 for (Evento evento : curriculos) {

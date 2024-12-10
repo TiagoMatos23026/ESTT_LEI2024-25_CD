@@ -259,11 +259,11 @@ public class Menu extends javax.swing.JFrame implements P2Plistener {
             
             User u = new User(nome, cc);
             
-
+            String addr = address;
             boolean loginSuccess = myremoteObject.login(nome, cc, pass);
 
             JOptionPane.showMessageDialog(this, "Login efetuado com sucesso!");
-            new MenuAutenticado(u).setVisible(true);
+            new MenuAutenticado(u, addr).setVisible(true);
 
         } catch (Exception ex) {
             Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);

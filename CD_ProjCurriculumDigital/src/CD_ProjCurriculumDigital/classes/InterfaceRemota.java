@@ -24,5 +24,5 @@ public interface InterfaceRemota extends Remote {
     public void sinchronizeTransactions(InterfaceRemota node) throws RemoteException;
     public boolean register(String nome, String cc, char[] pass) throws RemoteException;
     public boolean login(String nome, String cc, char[] pass) throws RemoteException;
-
+    public List<Evento> getCurriculos() throws RemoteException;
 }
