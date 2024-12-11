@@ -26,4 +26,5 @@ public interface InterfaceRemota extends Remote {
     public boolean login(String nome, String cc, char[] pass) throws RemoteException;
     public List<Evento> getCurriculos() throws RemoteException;
     public boolean registerEventos(String eventosList, String user, String numcc, int diff) throws RemoteException;
+    public String minerarBloco(Block b, int diff) throws RemoteException;
 }

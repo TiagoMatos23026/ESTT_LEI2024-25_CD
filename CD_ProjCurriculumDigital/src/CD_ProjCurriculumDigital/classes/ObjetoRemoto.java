@@ -14,6 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 
 /**
@@ -211,12 +212,26 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
             curriculo.save(fileCurriculumDigital);
 
             mt.saveToFile(curriculo.getLastBlockHash() + ".mkt");
-            
+
             return true;
         } catch (Exception e) {
             return false;
         }
 
+    }
+
+    public String minerarBloco(Block b, int diff) {
+        try {
+
+            String msg = b.getPreviousHash() + b.getData();
+            int nonce = MinerConcurrent.getNonce(msg, b.getDiff());
+
+            DefaultListModel model = new DefaultListModel();
+
+            return ("Hash: " + Hash.getHash(nonce + msg));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override

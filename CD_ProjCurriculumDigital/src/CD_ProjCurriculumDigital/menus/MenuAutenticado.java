@@ -367,7 +367,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Erro ao registar Evento", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else {
                     String user = txtUser.getText();
-                    JOptionPane.showMessageDialog(null, "Eventos adicionados ao currículo digital de" +  curriculo.getChain().toString());
+                    JOptionPane.showMessageDialog(null, "Eventos adicionados ao currículo digital de" + curriculo.getChain().toString());
                 }
 
                 /*
@@ -403,7 +403,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     i++;
                 }
 
-               SwingUtilities.invokeLater(() -> {
+                SwingUtilities.invokeLater(() -> {
 
                     listaBlocos.setModel(modelFinal);
                     btnRegistar.setEnabled(true);
@@ -454,21 +454,30 @@ public class MenuAutenticado extends javax.swing.JFrame {
         jButton1.setEnabled(false);
 
         new Thread(() -> {
+            try {
+                InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
 
-            String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
+                String[] blocoSelect = listaBlocos.getSelectedValue().split(" ");
 
-            final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
+                final Block b = curriculo.getChain().get(Integer.parseInt(blocoSelect[1]));
 
-            final int diff = b.getDiff();
+                final int diff = b.getDiff();
 
-            String msg = atualizarListaElementosBloco(b, diff);
+                String msg = myremoteObject.minerarBloco(b, diff);
 
-            SwingUtilities.invokeLater(() -> {
+                if (msg == null) {
+                    JOptionPane.showMessageDialog(null, "Erro ao minerar bloco.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
 
-                minedBlock.setText(msg);
-                jButton1.setEnabled(true);
+                SwingUtilities.invokeLater(() -> {
 
-            });
+                    minedBlock.setText(msg);
+                    jButton1.setEnabled(true);
+
+                });
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro desconhecido", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
 
         }).start();
     }//GEN-LAST:event_jButton1ActionPerformed

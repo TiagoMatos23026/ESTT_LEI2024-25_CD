@@ -25,6 +25,7 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
      */
     public MenuServidor() {
         initComponents();
+        labelLigado.setEnabled(false);
     }
 
     /**
@@ -41,6 +42,9 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
         txtServerListeningObjectName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtServerListeningPort = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtEnd = new javax.swing.JTextField();
+        labelLigado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,18 +73,36 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
             }
         });
 
+        jLabel3.setText("Endereço:");
+
+        txtEnd.setEditable(false);
+        txtEnd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEndActionPerformed(evt);
+            }
+        });
+
+        labelLigado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelLigado.setText("Ligado!");
+        labelLigado.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtServerListeningPort)
-                    .addComponent(txtServerListeningObjectName)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnStart, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelLigado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtEnd, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtServerListeningPort, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtServerListeningObjectName, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnStart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -92,9 +114,15 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
                 .addComponent(txtServerListeningObjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtServerListeningPort, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addComponent(labelLigado)
+                .addGap(40, 40, 40)
                 .addComponent(btnStart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -119,6 +147,9 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
             myremoteObject = new ObjetoRemoto(address, this);
             //link adress to object
             Naming.rebind(address, myremoteObject);
+            
+            txtEnd.setText(address);
+            labelLigado.setEnabled(true);
         } catch (Exception ex) {
             onException(ex, "Starting server");
             Logger.getLogger(MenuServidor.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,6 +159,10 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
     private void txtServerListeningObjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerListeningObjectNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtServerListeningObjectNameActionPerformed
+
+    private void txtEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEndActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEndActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -169,6 +204,9 @@ public class MenuServidor extends javax.swing.JFrame implements P2Plistener{
     private javax.swing.JButton btnStart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel labelLigado;
+    private javax.swing.JTextField txtEnd;
     private javax.swing.JTextField txtServerListeningObjectName;
     private javax.swing.JTextField txtServerListeningPort;
     // End of variables declaration//GEN-END:variables
