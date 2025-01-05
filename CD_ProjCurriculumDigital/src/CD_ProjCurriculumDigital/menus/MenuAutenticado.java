@@ -426,6 +426,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
                 InterfaceRemota myremoteObject = (InterfaceRemota) Naming.lookup(address);
                 List<Evento> curriculos = myremoteObject.getCurriculos();
 
+              
                 String s = "";
 
                 for (Evento evento : curriculos) {

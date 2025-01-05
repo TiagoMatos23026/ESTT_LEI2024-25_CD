@@ -4,7 +4,6 @@
  */
 package CD_ProjCurriculumDigital.classes;
 
-import static CD_ProjCurriculumDigital.menus.MenuAutenticado.fileCurriculumDigital;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -23,14 +21,14 @@ import javax.swing.SwingUtilities;
  */
 public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota {
 
+    public static String fileCurriculumDigital = "curriculumDigital.obj";
+    //cria um objeto do tipo CurriculumDigital
+    CurriculumDigital curriculo;
+    
     String address;
     CopyOnWriteArrayList<InterfaceRemota> network;
     CopyOnWriteArraySet<String> transactions;
     P2Plistener listener;
-
-    public static String fileCurriculumDigital = "curriculumDigital.obj";
-    //cria um objeto do tipo CurriculumDigital
-    CurriculumDigital curriculo;
 
     public ObjetoRemoto(String address, P2Plistener listener) throws RemoteException {
         super(RMI.getAdressPort(address));
@@ -172,6 +170,7 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
         return true;
     }
 
+
     public List<Evento> getCurriculos() throws RemoteException {
         try {
             curriculo = new CurriculumDigital();
@@ -232,7 +231,7 @@ public class ObjetoRemoto extends UnicastRemoteObject implements InterfaceRemota
         } catch (Exception e) {
             return null;
         }
-    }
+    }   
 
     @Override
     public void sinchronizeTransactions(InterfaceRemota node) throws RemoteException {
