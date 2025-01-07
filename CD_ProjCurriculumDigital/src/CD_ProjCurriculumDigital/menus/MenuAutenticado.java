@@ -367,7 +367,7 @@ public class MenuAutenticado extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Erro ao registar Evento", "Erro", JOptionPane.ERROR_MESSAGE);
                 } else {
                     String user = txtUser.getText();
-                    JOptionPane.showMessageDialog(null, "Eventos adicionados ao currículo digital de" + curriculo.getChain().toString());
+                    JOptionPane.showMessageDialog(null, "Eventos adicionados ");
                 }
 
                 /*
